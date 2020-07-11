@@ -1,15 +1,21 @@
+<!-- 组件说明 -->
 <template>
-  <div id="app">
-    <router-view> </router-view>
-    <tabbar />
+  <div class=''>
+    Order
   </div>
 </template>
+
 <script>
-    import Tabbar from 'components/content/tabbar/Tabbar.vue'
+    //import x from ''
     export default {
-        name: 'App',
+        name: 'Order',
         components: {
-            Tabbar
+
+        },
+        data() {
+            return {
+
+            };
         },
         computed: {
 
@@ -20,6 +26,6 @@
     }
 </script>
 
-<style>
+<style scoped>
 
 </style>

@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 # elm-copy
-
+仅供学习使用
 ## Project setup
 ```
 npm install
@@ -15,10 +14,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-=======
-# Elm-copy
-Vue+Vuex
->>>>>>> 5946aba21d3c4a4cc19841178503bb7fe4a34f7b

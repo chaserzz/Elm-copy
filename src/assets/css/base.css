@@ -1,0 +1,25 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+    outline: none；
+}
+
+
+/*移动端关闭a标签点击后的效果*/
+
+a:focus {
+    border: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
+    outline: none；
+}
+
+li {
+    list-style: none;
+}

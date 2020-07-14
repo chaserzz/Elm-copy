@@ -1,17 +1,20 @@
 <!-- 组件说明 -->
 <template>
-  <div id='Abe_swiper'>
-    <div class='swiper' @touchstart='touchStart' @touchmove='touchMove' @touchend='touchEnd'>
-        <!-- 轮播图内容 -->
-        <slot> </slot>
+    <div>  
+        <div id='Abe_swiper'>
+         <div class='swiper' @touchstart='touchStart' @touchmove='touchMove' @touchend='touchEnd'>
+            <!-- 轮播图内容 -->
+            <slot> </slot>
+         </div>
     </div>
     <!-- 轮播图下面的圆点 -->
     <div class="indicator">
-        <slot name="indicator" v-if=" showIndicator && slideCount>1 ">
-            <div v-for="(item, index) in slideCount" class="indi-item" :class="{active: index === currentItem-1}" :key="index"></div>
-        </slot>
+       <slot name="indicator" v-if=" showIndicator && slideCount>1 ">
+           <div v-for="(item, index) in slideCount" class="indi-item" :class="{active: index === currentItem-1}" :key="index"></div>
+       </slot>
     </div>
 </div>
+
 </template>
 
 <script>
@@ -198,11 +201,10 @@
     }
     
     .indicator {
-        position: absolute;
+        margin-top: 15px;
         display: flex;
         justify-content: center;
         width: 100%;
-        bottom: 8px;
     }
     
     .indi-item {
@@ -210,7 +212,7 @@
         width: 8px;
         height: 8px;
         border-radius: 4px;
-        background-color: #fff;
+        background-color: #e3e3e3;
         line-height: 8px;
         text-align: center;
         font-size: 12px;
@@ -218,6 +220,6 @@
     }
     
     .indi-item.active {
-        background-color: rgba(212, 62, 46, 1.0);
+        background-color: #007aff;
     }
 </style>

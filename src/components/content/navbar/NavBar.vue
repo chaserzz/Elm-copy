@@ -32,15 +32,15 @@
 <style scoped>
     .navbar {
         display: flex;
-        height: 44px;
-        line-height: 44px;
+        height: 42px;
+        line-height: 42px;
         text-align: center;
-        align-items: center;
     }
     
-    .left .right {
-        width: 60px;
-        height: 44px;
+    .left,
+    .right {
+        width: 32px;
+        height: 42px;
     }
     
     .center {

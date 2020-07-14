@@ -1,20 +1,16 @@
 <!-- 组件说明 -->
 <template>
   <div class=''>
-    Discover
-    <scroll id='Scroll'>
-
-    </scroll>
+    Order
   </div>
 </template>
 
 <script>
-    import Scroll from 'components/common/scroll/scroll.vue'
-
+    //import x from ''
     export default {
-        name: 'Discover',
+        name: 'Order',
         components: {
-            Scroll
+
         },
         data() {
             return {
@@ -31,7 +27,5 @@
 </script>
 
 <style scoped>
-    #Scroll {
-        height: 50vh;
-    }
+
 </style>

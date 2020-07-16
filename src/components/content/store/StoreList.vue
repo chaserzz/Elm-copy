@@ -1,7 +1,10 @@
 <!-- 组件说明 -->
 <template>
   <div class='storeList'>
-    <store-list-item v-for='(item,index) in storeList' :store-item='item' />
+    <store-list-item 
+    v-for='(item,index) in storeList' 
+    :store-item='item' 
+    :key='index'/>
   </div>
 </template>
 

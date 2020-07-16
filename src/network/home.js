@@ -17,18 +17,19 @@ export function getDetailLoaction(latitude, longtitude) {
 //获取食物分类列表
 export function getFoodCategory() {
     return request({
-        url: 'https://elm.cangdu.org/v2/index_entry'
+        url: '/v2/index_entry'
     })
 }
 
 //获取商家信息
 export function getStoreInfo(latitude, longitude, offset = 0, ) {
     return request({
-        url: 'https://elm.cangdu.org/shopping/restaurants',
+        url: '/shopping/restaurants',
         params: {
             latitude,
             longitude,
             offset,
+            limit: 30
         }
     })
 }

@@ -4,7 +4,7 @@ export function request(options) {
         // 1.创建axios的实例对象
         const instance = axios.create({
             baseURL: 'https://elm.cangdu.org',
-            timeout: 5000
+            timeout: 9000
         })
         instance.interceptors.response.use(res => {
             return res.data

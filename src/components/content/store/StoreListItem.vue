@@ -1,14 +1,14 @@
 <!-- 组件说明 -->
 <template>
-  <div class='storeListItem'>
-    <img :src="storeItem.image_path" alt="">
+  <div class='storeListItem' >
+    <img :src="storeItem.image_path" alt="~assets/images/loading.gif" @load='imgload()'>
     <!--商店信息-->
     <section class='storeInfo'>
     <!--第一行: 包括商店名称,  保 准 票-->
     <div class='first'>
-        <span class='store_name'>
+        <div class='store_name'>
             {{storeItem.name}}
-        </span>
+        </div>
         <ul class='store_promise'>
             <li v-for='(item,index) in storeItem.supports' :key='index'>{{item.icon_name}}</li>
         </ul>
@@ -32,7 +32,7 @@
             月售{{storeItem.recent_order_num}}单
         </div>
         <div class='deliver'>
-            <span class='deliver_left'>{{storeItem.delivery_mode.text || ''}}</span>
+            <span v-if='storeItem.delivery_mode' class='deliver_left' >{{storeItem.delivery_mode.text}}</span>
             <span class='deliver_right'>准时达</span>
         </div>
     </div>
@@ -68,13 +68,9 @@
 
             };
         },
-        computed: {
-
-
-        },
         methods: {
-            getWidth() {
-                console.log(1);
+            imgload() {
+                this.$bus.$emit('imgLoad')
             }
         },
     }
@@ -104,9 +100,15 @@
     }
     
     .store_name {
-        width: 8.5rem;
+        box-sizing: border-box;
+        width: 9.5rem;
+        height: 1rem;
+        line-height: 1rem;
         font-size: 0.85rem;
         font-weight: 600;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
     }
     /*利用伪前元素制作品牌*/
     

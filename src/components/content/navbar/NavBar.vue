@@ -39,7 +39,7 @@
     
     .left,
     .right {
-        width: 32px;
+        width: 45px;
         height: 42px;
     }
     

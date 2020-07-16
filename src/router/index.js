@@ -9,11 +9,26 @@ const Order = () =>
     import ("views/order/Order.vue")
 const Profile = () =>
     import ("views/profile/Profile.vue")
+const Locate = () =>
+    import ("views/locate/Locate")
+const City = () =>
+    import ("views/city/City")
+
 Vue.use(VueRouter)
 
 const routes = [{
         path: '/',
-        redirect: '/home'
+        redirect: '/city'
+    },
+    {
+        path: '/city',
+        name: 'City',
+        component: City
+    },
+    {
+        path: '/locate',
+        name: 'Locate',
+        component: Locate
     },
     {
         path: '/home',

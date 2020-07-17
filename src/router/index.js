@@ -13,6 +13,9 @@ const Locate = () =>
     import ("views/locate/Locate")
 const City = () =>
     import ("views/city/City")
+const Food = () =>
+    import ("views/food/Food")
+
 
 Vue.use(VueRouter)
 
@@ -34,6 +37,11 @@ const routes = [{
         path: '/home/:geohash',
         name: 'Home',
         component: Home
+    },
+    {
+        path: '/food/:id',
+        name: 'Food',
+        component: Food
     },
     {
         path: '/discover',

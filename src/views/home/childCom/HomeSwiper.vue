@@ -4,21 +4,17 @@
     <swiper>
       <swiper-item > 
         <ul class='wrap'>         
-          <li v-for='(item,index) in foodList1' :key='index' class='foodItem'>
-            <a href="">            
-              <img :src="item.image_url" alt="">
+          <li v-for='(item,index) in foodList1' :key='index' class='foodItem' @click='GoFood(item)'>
+              <img :src="item.image_url" >
               <span>{{item.title}}</span>
-            </a>
       </li>
     </ul>
       </swiper-item>
       <swiper-item > 
         <ul class='wrap'>         
-          <li v-for='(item,index) in foodList2' :key='index' class='foodItem'>
-            <a href="">            
-              <img :src="item.image_url" alt="">
+          <li v-for='(item,index) in foodList2' :key='index' class='foodItem' @click='GoFood(item)'>  
+              <img :src="item.image_url" >
               <span>{{item.title}}</span>
-            </a>
       </li>
     </ul>
       </swiper-item>
@@ -56,11 +52,12 @@
 
             };
         },
-        computed: {
-
-        },
         methods: {
-
+            GoFood(item) {
+                this.$router.push({
+                    path: '/food/' + item.id
+                })
+            }
         },
     }
 </script>

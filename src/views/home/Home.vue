@@ -70,6 +70,7 @@
                 this._getStoreInfo()
             },
             _getStoreInfo() {
+                //获取商店的信息
                 getStoreInfo(this.latitude, this.longitude, this.storePage * 20).then(res => {
                     for (let item of res) {
                         item.image_path = 'https://elm.cangdu.org/img/' + item.image_path
@@ -87,8 +88,8 @@
             this.geohash = this.$route.params.geohash
             getDetailLoaction(this.geohash).then(res => {
                 this.location = res.name
-                if (this.location.length > 7) {
-                    this.location = this.location.substring(0, 7)
+                if (this.location.length > 8) {
+                    this.location = this.location.substring(0, 8)
                     this.location += '...'
                 }
                 this.longitude = res.longitude

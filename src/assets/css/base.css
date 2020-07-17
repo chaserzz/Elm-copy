@@ -23,3 +23,17 @@ a:focus {
 li {
     list-style: none;
 }
+
+input {
+    padding: 0.2rem;
+    border: none;
+}
+
+input {
+    outline: none;
+}
+
+button {
+    border: none;
+    outline: none;
+}

@@ -9,7 +9,8 @@
       <li v-for='(item,index) in cityList' 
       :key='index'
       :style='{color:fontColor}'
-      @click='cityClick(item.id)'>{{item.name}}</li>
+      @click='cityClick(item.id)'
+      >{{item.name}}</li>
     </ul>
   </div>
 </template>
@@ -48,7 +49,9 @@
         },
         methods: {
             cityClick(id) {
-
+                this.$router.push({
+                    path: '/locate/' + id
+                })
             }
         },
     }

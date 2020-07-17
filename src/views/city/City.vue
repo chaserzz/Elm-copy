@@ -5,7 +5,7 @@
   <div class='city'>
     <!--导航栏-->
     <nav-bar class='nav_bar' >
-      <div class='left' slot="left">elm.me</div>
+      <div class='left' slot="left" @click='navLeftClick()'>elm.me</div>
       <div class='right' slot='right'>
       <span>登录</span>
         |
@@ -20,7 +20,7 @@
         <span class='r'>定位不准时,请在城市列表中选择</span>
       </div>
       <!--定位城市-->
-      <div class='guess'>
+      <div class='guess' @click='cityClick(guessCity.id)'>
         <span class='guess_city' v-if='guessCity.name'>{{guessCity.name }}</span>
         <span class='enter'><svg t="1594813013816" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3025" width="0.8rem" height="0.8rem"><path d="M310.11328 58.50624l439.94624 435.42016a25.25696 25.25696 0 0 1 0 35.98336l-439.94624 435.42528a25.89696 25.89696 0 0 1-36.352 0 25.2672 25.2672 0 0 1 0-35.98848l421.74976-417.42848-421.74976-417.42848a25.26208 25.26208 0 0 1 0-35.98336 25.89696 25.89696 0 0 1 36.352 0z" p-id="3026" fill="#000000"></path></svg></span>
       </div>
@@ -74,20 +74,37 @@
 
         },
         methods: {
+            navLeftClick() {
+                //页面重载
+                let NewPage = '_empty' + '?time=' + new Date().getTime() / 1000
+                    // 之后将页面push进去
+                this.$router.push(NewPage)
+                    // 再次返回上一页即可
+                this.$router.go(-1)
+            },
+            //猜测地点点击跳转
+            cityClick(id) {
+                this.$router.push({
+                    path: '/locate/' + id
+                })
+            },
 
         },
         beforeCreate() {
+            //获取猜测地点
             getCity().then(res => {
-                this.guessCity = res
-            })
+                    this.guessCity = res
+                })
+                //获取热门城市
             getCity('hot').then(res => {
-                for (var item of res) {
-                    let city = {}
-                    city.name = item.name
-                    city.id = item.id
-                    this.hotCity.push(city)
-                }
-            })
+                    for (var item of res) {
+                        let city = {}
+                        city.name = item.name
+                        city.id = item.id
+                        this.hotCity.push(city)
+                    }
+                })
+                //获取所有城市
             getCity('group').then(res => {
                 for (let i = 65; i <= 90; i++) {
                     let word = String.fromCharCode(i)
@@ -138,8 +155,8 @@
     .tip {
         position: relative;
         height: 1rem;
-        margin-top: 1.3rem;
-        line-height: 1rem;
+        margin-top: 1.7rem;
+        line-height: 1.6rem;
         font-size: 0.5rem;
         color: #777;
         transform: scale(0.95);

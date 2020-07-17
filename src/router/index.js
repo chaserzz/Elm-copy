@@ -26,12 +26,12 @@ const routes = [{
         component: City
     },
     {
-        path: '/locate',
+        path: '/locate/:cityId',
         name: 'Locate',
         component: Locate
     },
     {
-        path: '/home',
+        path: '/home/:geosh',
         name: 'Home',
         component: Home
     },

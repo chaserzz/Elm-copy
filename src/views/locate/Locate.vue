@@ -54,11 +54,16 @@
         methods: {
             //提交按钮点击事件
             submitClick() {
-                this.history_mode = false
-                searchAddress(this.cityId, this.keywords).then(res => {
-                    this.searchList = res
-                    this.$refs.scroll.refresh()
-                })
+                if (this.keywords === '') {
+                    this.$toast.show('请输入搜索内容', 2000)
+                } else {
+                    this.history_mode = false
+                    searchAddress(this.cityId, this.keywords).then(res => {
+                        this.searchList = res
+                        this.$refs.scroll.refresh()
+                    })
+                }
+
             },
             //input回车事件
             inputKeyup() {

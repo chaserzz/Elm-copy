@@ -31,7 +31,7 @@ const routes = [{
         component: Locate
     },
     {
-        path: '/home/:geosh',
+        path: '/home/:geohash',
         name: 'Home',
         component: Home
     },

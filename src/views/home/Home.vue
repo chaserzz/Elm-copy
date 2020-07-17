@@ -21,7 +21,6 @@
     import HomeStoreInfo from './childCom/HomeStoreInfo.vue'
     //Home组件相关数据的获取
     import {
-        getCity,
         getDetailLoaction,
         getFoodCategory,
         getStoreInfo
@@ -50,6 +49,8 @@
                     type: Number,
                     default: 0,
                 },
+                //由路由获得经纬度
+                geohash: '',
                 //经纬度
                 latitude: 0,
                 longitude: 0,
@@ -82,21 +83,19 @@
                 })
             }
         },
-        beforeCreate() {
-            getCity().then(res => {
-                this.cityId = res.id
-                this.latitude = res.latitude
+        beforeMount() {
+            this.geohash = this.$route.params.geohash
+            getDetailLoaction(this.geohash).then(res => {
+                this.location = res.name
+                if (this.location.length > 7) {
+                    this.location = this.location.substring(0, 7)
+                    this.location += '...'
+                }
                 this.longitude = res.longitude
-
-            }).then(() => {
-                getDetailLoaction(this.latitude, this.longitude).then(res => {
-                    this.location = res.name
-                    console.log(res);
-                    console.log(this.latitude);
-                    console.log(this.longitude);
-                })
-                this._getStoreInfo()
+                this.latitude = res.latitude
             })
+            this._getStoreInfo()
+
 
             getFoodCategory().then(res => {
                 for (let item of res) {

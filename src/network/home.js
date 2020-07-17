@@ -1,17 +1,9 @@
 import { request } from './network'
-//获取城市列表
-export function getCity(type = 'guess') {
-    return request({
-        url: '/v1/cities',
-        params: {
-            type
-        }
-    })
-}
+
 //通过经纬度获得详细地址
-export function getDetailLoaction(latitude, longtitude) {
+export function getDetailLoaction(geohash) {
     return request({
-        url: '/v2/pois/' + latitude + ',' + longtitude
+        url: '/v2/pois/' + geohash
     })
 }
 //获取食物分类列表

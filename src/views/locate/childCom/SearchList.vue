@@ -16,6 +16,7 @@
         getStore,
         removeStore
     } from 'common/utils.js'
+
     export default {
         name: 'SearchList',
         props: {
@@ -53,7 +54,7 @@
                     historyList.push(item)
                     setStore('historyList', historyList)
                 }
-
+                setStore('geohash', item.geohash + '')
                 this.$router.push({
                     path: '/home/' + item.geohash
                 })

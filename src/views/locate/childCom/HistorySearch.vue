@@ -19,6 +19,9 @@
 </template>
 
 <script>
+    import {
+        setStore,
+    } from 'common/utils'
     export default {
         name: 'HistorySearch',
         data() {
@@ -48,6 +51,7 @@
                 localStorage.removeItem('historyList')
             },
             GoHome(item) {
+                setStore('geohash', item.geohash + '')
                 this.$router.push({
                     path: '/home/' + item.geohash
                 })

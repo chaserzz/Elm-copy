@@ -4,7 +4,7 @@
 <template>
   <div class='tabbar'>
     <tab-bar class='tabbar'>
-      <tab-bar-item path='/home'  activeColor='#1bbffc'>
+      <tab-bar-item path='/home' @click.native='HomeClick()' :stop='true' activeColor='#1bbffc'>
         <div slot="item-icon">
           <img src="~assets/images/tabbar/elm.png" alt="">
         </div>
@@ -13,7 +13,7 @@
         </div>
         <div slot="item-text">主页</div>
       </tab-bar-item>
-      <tab-bar-item path='/discover' activeColor='#1bbffc'>
+      <tab-bar-item path='/discover' @click.native='DiscoverClick()' :stop='true'  activeColor='#1bbffc'>
         <div slot="item-icon">          
           <img src="~assets/images/tabbar/discover.png" alt="">
         </div>
@@ -47,6 +47,11 @@
 <script>
     import TabBar from 'components/common/tabbar/TabBar'
     import TabBarItem from 'components/common/tabbar/TabBarItem'
+
+    import {
+        getStore
+    } from 'common/utils'
+
     export default {
         name: 'Tabbar',
         components: {
@@ -55,14 +60,23 @@
         },
         data() {
             return {
-
+                geohash: ''
             };
         },
-        computed: {
 
-        },
         methods: {
-
+            HomeClick() {
+                this.geohash = getStore('geohash')
+                this.$router.push({
+                    path: '/home/' + this.geohash
+                })
+            },
+            DiscoverClick() {
+                this.geohash = getStore('geohash')
+                this.$router.push({
+                    path: '/discover/' + this.geohash
+                })
+            },
         },
     }
 </script>

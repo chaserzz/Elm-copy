@@ -44,7 +44,7 @@ const routes = [{
         component: Food
     },
     {
-        path: '/discover',
+        path: '/discover/:geohash',
         name: 'Discover',
         component: Discover
     },

@@ -7,6 +7,9 @@
 </template>
 
 <script>
+    import {
+        mapGetters
+    } from 'vuex'
     export default {
         name: "TabBarItem",
         props: {
@@ -17,19 +20,28 @@
             activeColor: {
                 type: String,
                 default: '#ff5777'
+            },
+            stop: {
+                type: Boolean,
+                default: false
+            }
+        },
+        data() {
+            return {
+                geohash: ' '
             }
         },
         methods: {
             itemClick() {
+                if (this.stop) return;
                 if (this.path == this.$route.path) {
                     return;
                 }
                 this.$router.replace(this.path);
-            }
+            },
         },
         computed: {
             isActive() {
-
                 return this.$route.path.indexOf(this.path) !== -1
             },
             activeStyle() {
@@ -37,7 +49,10 @@
                     color: this.activeColor
                 } : {}
             }
-        }
+        },
+        created() {
+
+        },
     }
 </script>
 

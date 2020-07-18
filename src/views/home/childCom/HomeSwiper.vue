@@ -87,7 +87,7 @@
     
     .wrap span {
         display: block;
-        font-size: .54rem;
+        font-size: .74rem;
         text-align: center;
         color: #666;
         margin-top: 0.5vh;

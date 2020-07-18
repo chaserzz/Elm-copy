@@ -7,14 +7,15 @@
         <button @click='commit()'>提交</button>
     </div>
     <div>
-        <div v-if='Historymodel' class='title'>
+        <div v-if='Historymodel && historySearch[0]' class='title'>
             搜索历史
         </div>
-        <div  v-else class='title'>
+        <div  v-if='!Historymodel' class='title'>
             商家
         </div>
     </div>
     <scroll id='Scroll'>
+        <!-- 历史记录-->
         <div v-if='Historymodel '>
             <ul>
                 <li v-for='(item,index) in historySearch' class='historyItem'>
@@ -26,7 +27,12 @@
                 <span>清空搜索历史</span>
             </div>
         </div>
-        <div v-if='!Historymodel' class='resulte'>
+        <!--未搜索到数据-->
+        <div class='noneResulte' v-if='IsreasulteNull'>
+            很抱歉!无搜索结果
+        </div>
+        <!--搜索到数据-->
+        <div v-if='!IsreasulteNull && !Historymodel ' class='resulte'>
            <ul>
                <li v-for='(item,index) in searchResulte' >
                 <img :src="item.image_path" alt="">
@@ -75,6 +81,7 @@
                 historySearch: [],
                 Historymodel: true,
                 searchResulte: [],
+                IsreasulteNull: false
             };
         },
         computed: {
@@ -89,30 +96,39 @@
             },
             //提交按钮
             commit() {
+                //防止空数据传输
                 if (this.keyword === '') {
                     this.$toast.show('请输入搜索内容', 2000)
                     return;
                 }
-                let repite = false
-                for (let item of this.historySearch) {
-                    if (this.keyword === item) {
-                        repite = true
-                    }
-                }
-                if (!repite) {
-                    this.historySearch.push(this.keyword)
-                }
-                removeStore('historySearch')
-                setStore('historySearch', this.historySearch)
+                //获取搜索的商店
                 let geohash = getStore('geohash')
-                this.Historymodel = false
-                getSearch('31.22967,121.4762', this.keyword).then(res => {
-                    for (let item of res) {
-                        item.image_path = 'https://elm.cangdu.org/img/' + item.image_path
+                getSearch(geohash, this.keyword).then(res => {
+                    if (res.length > 0) {
+                        for (let item of res) {
+                            item.image_path = 'https://elm.cangdu.org/img/' + item.image_path
+                        }
+                        this.searchResulte = res
+                        console.log(res);
+                    } else {
+                        this.IsreasulteNull = true
                     }
-                    this.searchResulte = res
-
+                }).then(() => {
+                    if (this.IsreasulteNull) return;
+                    let repite = false
+                    for (let item of this.historySearch) {
+                        if (this.keyword === item) {
+                            repite = true
+                        }
+                    }
+                    if (!repite) {
+                        this.historySearch.push(this.keyword)
+                    }
+                    removeStore('historySearch')
+                    setStore('historySearch', this.historySearch)
+                    this.Historymodel = false
                 })
+
             },
             //关闭图标
             deleteItem(index) {
@@ -123,9 +139,14 @@
                 this.historySearch = []
                 localStorage.removeItem('historySearch')
             },
-            //回车键
+            //回车键搜索
             EnterUp() {
+                if (this.keyword === '') {
+                    this.Historymodel = true
+                    this.IsreasulteNull = false
+                }
                 if (event.keyCode === 13) {
+                    this.IsreasulteNull = false
                     this.commit()
                 }
             }
@@ -208,6 +229,15 @@
         font-weight: 550;
         color: rgb(49, 144, 232);
         text-align: center;
+    }
+    
+    .noneResulte {
+        border-top: .075rem solid #e4e4e4;
+        height: 7vh;
+        line-height: 7vh;
+        text-align: center;
+        color: #333;
+        font-size: .8rem;
     }
     
     .resulte img {

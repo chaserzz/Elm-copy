@@ -1,13 +1,15 @@
 <!-- 组件说明 -->
 <template>
   <div class='food'>
-  <category-list :category-list='categoryList' />
+    <category-list :category-list='categoryList' />
+    <food-nav-bar title='商朝便利'/>
 
   </div>
 </template>
 
 <script>
     import CategoryList from './childCom/CategoryList.vue'
+    import FoodNavBar from './childCom/FoodNavBar.vue'
 
     import {
         getCategoryList
@@ -16,7 +18,8 @@
     export default {
         name: 'Food',
         components: {
-            CategoryList
+            CategoryList,
+            FoodNavBar
         },
         data() {
             return {
@@ -40,5 +43,10 @@
 </script>
 
 <style scoped>
-
+    .food {
+        position: relative;
+        background-color: #fff;
+        height: 100vh;
+        z-index: 9;
+    }
 </style>

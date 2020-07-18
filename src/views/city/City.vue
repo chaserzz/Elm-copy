@@ -157,7 +157,7 @@
         height: 1rem;
         margin-top: 1.7rem;
         line-height: 1.6rem;
-        font-size: 0.5rem;
+        font-size: 0.7rem;
         color: #777;
         transform: scale(0.95);
     }

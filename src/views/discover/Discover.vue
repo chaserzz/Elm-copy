@@ -1,6 +1,6 @@
 <!-- 组件说明 -->
 <template>
-  <div class=''>
+  <div class='discover'>
     <discover-nav-bar />
     <div class='search'>
         <input type="text" @keyup='EnterUp()' placeholder="请输入商家或美食名称" v-model='keyword' />
@@ -15,7 +15,7 @@
         </div>
     </div>
     <scroll id='Scroll'>
-        <div v-if='Historymodel'>
+        <div v-if='Historymodel '>
             <ul>
                 <li v-for='(item,index) in historySearch' class='historyItem'>
                     <span>{{item}}</span>
@@ -138,12 +138,19 @@
 
 <style scoped>
     #Scroll {
-        height: 50vh;
+        background-color: #fff;
+    }
+    
+    .discover {
+        position: relative;
+        height: calc(100vh - 49px);
+        background-color: #f5f5f5;
     }
     
     .search {
         padding: 0.55rem 0.15rem;
         height: 3rem;
+        background-color: #fff;
     }
     
     .search input {
@@ -230,12 +237,13 @@
     .pay {
         display: inline-block;
         position: relative;
+        top: -0.18rem;
         font-size: 0.65rem;
-        margin-left: 0.7rem;
-        padding-bottom: 0.055rem;
-        border-bottom: 0.1rem solid rgb(255, 96, 0);
+        margin-left: 0.3rem;
+        border-bottom: 0.08rem solid rgb(255, 96, 0);
         color: rgb(255, 96, 0);
         font-weight: 550;
+        transform: scale(0.8);
     }
     
     .pay::after {

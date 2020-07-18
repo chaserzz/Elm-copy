@@ -73,7 +73,7 @@
         width: 25%;
         height: 1.9rem;
         line-height: 1.9rem;
-        font: .6rem/1.9rem Microsoft YaHei;
+        font: .75rem/1.9rem Microsoft YaHei;
         border-bottom: .025rem solid #e4e4e4;
         border-right: .025rem solid #e4e4e4;
         white-space: nowrap;
@@ -98,7 +98,7 @@
     
     .title {
         height: 1.65rem;
-        font: .55rem/1.45rem Helvetica;
+        font: .8rem/1.45rem Helvetica;
         color: #666;
         padding-left: .5rem;
         border-bottom: .07rem solid #e4e4e4;
@@ -107,7 +107,7 @@
     
     .desc {
         display: inline-block;
-        font-size: .475rem;
+        font-size: .7rem;
         color: #999;
         transform: scale(0.9);
     }

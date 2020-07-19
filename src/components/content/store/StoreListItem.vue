@@ -1,6 +1,6 @@
 <!-- 组件说明 -->
 <template>
-  <div class='storeListItem' >
+  <div class='storeListItem' @click='GoShop(storeItem)'>
     <img :src="storeItem.image_path" alt="~assets/images/loading.gif" @load='imgload()'>
     <!--商店信息-->
     <section class='storeInfo'>
@@ -71,6 +71,11 @@
         methods: {
             imgload() {
                 this.$bus.$emit('imgLoad')
+            },
+            GoShop(storeItem) {
+                this.$router.push({
+                    path: '/shop/' + storeItem.id
+                })
             }
         },
     }

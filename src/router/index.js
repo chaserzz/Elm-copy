@@ -15,7 +15,8 @@ const City = () =>
     import ("views/city/City")
 const Food = () =>
     import ("views/food/Food")
-
+const Shop = () =>
+    import ("views/shop/Shop")
 
 Vue.use(VueRouter)
 
@@ -57,6 +58,11 @@ const routes = [{
         path: '/profile',
         name: 'Profile',
         component: Profile
+    },
+    {
+        path: '/shop/:shopid',
+        name: 'Shop',
+        component: Shop
     }
 ]
 

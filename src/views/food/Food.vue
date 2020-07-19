@@ -1,8 +1,8 @@
 <!-- 组件说明 -->
 <template>
   <div class='food'>
-    <category-list :category-list='categoryList' />
     <food-nav-bar title='商朝便利'/>
+    <category-list :category-list='categoryList' />
 
   </div>
 </template>

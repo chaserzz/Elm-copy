@@ -41,7 +41,9 @@
                 default () {
                     return []
                 }
-            }
+            },
+            latitude: '',
+            longitude: ''
         },
         components: {
             Swiper,
@@ -55,7 +57,7 @@
         methods: {
             GoFood(item) {
                 this.$router.push({
-                    path: '/food/' + item.id
+                    path: '/food/' + this.longitude + '/' + this.latitude + '/' + item.title + '/' + item.id
                 })
             }
         },

@@ -1,40 +1,84 @@
 <!-- 组件说明 -->
 <template>
   <div class='food'>
-    <food-nav-bar class='navbar' title='商朝便利'/>
-    <category-list :category-list='categoryList' />
-
+    <food-nav-bar class='navbar' :title='foodTitle'/>
+    <category-list
+    class='categoryList'
+    ref='categoryList' 
+    :category-list='categoryList' 
+    :category-title='foodTitle' 
+    @change = 'Change'
+    @order = 'order'
+    />
+    <food-store-info :storeInfo = 'storeInfo'/>
   </div>
 </template>
 
 <script>
     import CategoryList from './childCom/CategoryList.vue'
     import FoodNavBar from './childCom/FoodNavBar.vue'
+    import FoodStoreInfo from './childCom/FoodStoreInfo.vue'
 
     import {
-        getCategoryList
+        getCategoryList,
+        getStoreInfo,
     } from 'network/food'
 
     export default {
         name: 'Food',
         components: {
             CategoryList,
-            FoodNavBar
+            FoodNavBar,
+            FoodStoreInfo
         },
         data() {
             return {
                 currentId: 0,
-                categoryList: []
+                categoryList: [],
+                foodTitle: '',
+                latitude: '',
+                longitude: '',
+                storePage: 0,
+                orderId: 4,
+                storeInfo: []
             };
         },
         computed: {
 
         },
         methods: {
-
+            getParams() {
+                this.currentId = this.$route.params.id
+                this.foodTitle = this.$route.params.name
+                this.latitude = this.$route.params.latitude
+                this.longitude = this.$route.params.longitude
+            },
+            Change(item) {
+                this.currentId = item.id
+                this.foodTitle = item.name
+            },
+            order(id) {
+                this.orderId = id
+                this._getStoreInfo()
+                this.$refs.categoryList.sortItem('order')
+            },
+            _getStoreInfo() {
+                getStoreInfo(this.latitude, this.longitude, this.page * 20, this.currentId, this.orderId).then(res => {
+                    let list = []
+                    for (let item of res) {
+                        item.image_path = 'https://elm.cangdu.org/img/' + item.image_path
+                        item.startWidth = {
+                            width: (item.rating / 5.0) * 3.0 + 'rem'
+                        }
+                        list.push(item)
+                    }
+                    this.storeInfo = list
+                    this.storePage++;
+                })
+            }
         },
         created() {
-            this.currentId = this.$route.params.id
+            this.getParams()
             getCategoryList().then(res => {
                 for (const item of res) {
                     if (item.image_url) {
@@ -47,8 +91,10 @@
                     }
                 }
                 this.categoryList = res
-                console.log(res);
             })
+        },
+        beforeMount() {
+            this._getStoreInfo()
         },
     }
 </script>
@@ -64,5 +110,10 @@
         background-color: #fff;
         height: 100vh;
         z-index: 9;
+    }
+    
+    .categoryList {
+        position: relative;
+        z-index: 99;
     }
 </style>

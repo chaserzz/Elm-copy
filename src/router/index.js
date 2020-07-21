@@ -40,7 +40,7 @@ const routes = [{
         component: Home
     },
     {
-        path: '/food/:id',
+        path: '/food/:longitude/:latitude/:name/:id',
         name: 'Food',
         component: Food
     },

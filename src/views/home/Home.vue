@@ -7,7 +7,7 @@
             :pull-up-load='true'
             :probe-type='3'
             @pullingUp='lodaData'>
-        <home-swiper :foodList1='foodPage1' :foodList2='foodPage2'/>
+        <home-swiper :foodList1='foodPage1' :foodList2='foodPage2' :longitude ='longitude' :latitude = 'latitude'/>
         <home-store-info :storeInfo='storeInfo'/>
     </scroll>
 

@@ -1,7 +1,7 @@
 <!-- 组件说明 -->
 <template>
   <div class='storeListItem' @click='GoShop(storeItem)'>
-    <img :src="storeItem.image_path" alt="~assets/images/loading.gif" @load='imgload()'>
+    <img :src="storeItem.image_path"  @load='imgload()'>
     <!--商店信息-->
     <section class='storeInfo'>
     <!--第一行: 包括商店名称,  保 准 票-->
@@ -182,7 +182,7 @@
     .sell,
     .deliver {
         line-height: 1.25rem;
-        font-size: 0.45rem;
+        font-size: 0.75rem;
     }
     
     .deliver {
@@ -232,7 +232,7 @@
     .third {
         display: flex;
         position: relative;
-        font-size: .5rem;
+        font-size: .73rem;
         margin-top: 0.55rem;
         color: #999;
     }

@@ -10,7 +10,15 @@
     @change = 'Change'
     @order = 'order'
     />
-    <food-store-info :storeInfo = 'storeInfo'/>
+    <scroll 
+    id='Scroll'
+    ref='scroll'
+    :pull-up-load='true'
+    :probe-type='3'
+    @pullingUp='lodaData'>
+    <div class='space'></div>
+        <food-store-info class='storeInfo' :storeInfo = 'storeInfo'/>
+    </scroll>
   </div>
 </template>
 
@@ -18,6 +26,8 @@
     import CategoryList from './childCom/CategoryList.vue'
     import FoodNavBar from './childCom/FoodNavBar.vue'
     import FoodStoreInfo from './childCom/FoodStoreInfo.vue'
+
+    import scroll from 'components/common/scroll/scroll'
 
     import {
         getCategoryList,
@@ -29,7 +39,8 @@
         components: {
             CategoryList,
             FoodNavBar,
-            FoodStoreInfo
+            FoodStoreInfo,
+            scroll
         },
         data() {
             return {
@@ -75,6 +86,9 @@
                     this.storeInfo = list
                     this.storePage++;
                 })
+            },
+            lodaData() {
+                this._getStoreInfo()
             }
         },
         created() {
@@ -100,6 +114,10 @@
 </script>
 
 <style scoped>
+    #Scroll {
+        height: calc(100vh - 42px - 6vh);
+    }
+    
     .navbar {
         position: relative;
         z-index: 99;
@@ -115,5 +133,9 @@
     .categoryList {
         position: relative;
         z-index: 99;
+    }
+    
+    .space {
+        height: 2.5vh;
     }
 </style>

@@ -187,6 +187,7 @@
     
     .sortList {
         padding: 1.5vh 0;
+        height: 6vh;
         border-bottom: 0.055rem solid #e4e4e4;
     }
     

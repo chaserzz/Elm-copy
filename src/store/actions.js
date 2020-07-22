@@ -1,4 +1,5 @@
-import {} from './mutations_type'
+import { SETLATITUDE, SETLONGTITUDE } from './mutations_type'
+
 
 export default {
 

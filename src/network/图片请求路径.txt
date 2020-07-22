@@ -1,2 +1,4 @@
 //首页列表图的路径
 https: //fuss10.elemecdn.com
+//shop
+https://elm.cangdu.org/img/

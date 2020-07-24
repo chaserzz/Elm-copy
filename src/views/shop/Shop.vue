@@ -5,43 +5,56 @@
   <div class='Shop'>
     <shop-nav-bar class='navBar'/>
     <shop-desc :info = 'shopInfo' @showActive = 'showActive'/>
-    <tab-control :title='["商品","评价"]' @tabClick = 'tabClick'/>
+    <tab-control class='tabControl' :title='["商品","评价"]' @tabClick = 'tabClick'/>
+    <shop-food-list :food-list='FoodList'/>
   </div>
 </template>
 
 <script>
     import ShopNavBar from './childCom/ShopNavBar'
     import ShopDesc from './childCom/ShopDesc'
+    import ShopFoodList from './childCom/ShopFoodList.vue'
 
     import tabControl from 'components/content/tabcontrol/tabcontrol'
 
     import {
-        getShopInfo
+        getShopInfo,
+        getFoodList
     } from 'network/shop.js'
     export default {
         name: 'Shop',
         components: {
             ShopNavBar,
             ShopDesc,
-            tabControl
+            tabControl,
+            ShopFoodList
         },
         data() {
             return {
                 shopId: 0,
-                shopInfo: []
+                shopInfo: [],
+                FoodList: []
             };
         },
         computed: {
 
         },
         methods: {
+            //获取关于店铺的所有信息
             getShopInfo() {
                 this.shopId = this.$route.params.shopid
+                    //获取店铺的详情
                 getShopInfo(this.shopId).then(res => {
-                    res.image_path = 'https://elm.cangdu.org/img/' + res.image_path
-                    res.activities[0].icon_color = '#' + res.activities[0].icon_color
-                    this.shopInfo = res
+                        res.image_path = 'https://elm.cangdu.org/img/' + res.image_path
+                        if (res.activities[0]) {
+                            res.activities[0].icon_color = '#' + res.activities[0].icon_color
+                        }
+                        this.shopInfo = res
+                    })
+                    //获取店铺的食品页面
+                getFoodList(this.shopId).then(res => {
                     console.log(res);
+                    this.FoodList = res
                 })
             },
             showActive() {
@@ -50,7 +63,7 @@
             //tab栏点击
             tabClick(index) {
                 console.log(index);
-            }
+            },
         },
         mounted() {
             this.getShopInfo()
@@ -70,5 +83,9 @@
         position: absolute;
         left: -.8rem;
         z-index: 100;
+    }
+    
+    .tabControl {
+        border-bottom: .025rem solid #e4e4e4;
     }
 </style>

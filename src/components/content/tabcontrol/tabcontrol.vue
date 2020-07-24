@@ -42,10 +42,10 @@
 <style scoped>
     .tabcontrol {
         display: flex;
-        height: 40px;
-        line-height: 40px;
+        height: 8.5vh;
+        line-height: 8.5vh;
         text-align: center;
-        font-size: 13px;
+        font-size: .75rem;
         color: #666;
         background-color: #fff;
     }

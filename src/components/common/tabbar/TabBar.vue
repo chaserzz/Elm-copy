@@ -13,6 +13,7 @@
 <style scoped>
     .tab-bar {
         background-color: #f6f6f6;
+        width: 100%;
         height: 49px;
         border-top: 1px solid #eee;
         box-shadow: 0 -1px 1px rgba(150, 150, 150, .08);

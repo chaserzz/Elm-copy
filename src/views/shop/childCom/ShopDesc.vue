@@ -4,7 +4,7 @@
       <!--毛玻璃背景-->
     <div class='bgPic'>
       <img :src="info.image_path">
-    </div>
+    </div> 
     <div class='shop_desc'>
       <header>
         <div class='shopImg'>

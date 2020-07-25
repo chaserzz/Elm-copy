@@ -45,6 +45,7 @@
             refresh() {
                 this.scroll && this.scroll.refresh();
             },
+            //获得Y值
             getPositionY() {
                 return this.scroll ? this.scroll.y : 0;
             }

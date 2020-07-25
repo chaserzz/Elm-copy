@@ -3,24 +3,30 @@
   <div class='FoodList'>
     <transition name="fade-choose">
     <div>
-      <scroll id='left_Scroll'>
+      <scroll 
+      ref='left_scroll'
+      id='left_Scroll'>
         <div class='left'>
           <ul class='foodtitle'>
-            <li class='foodtitleitem' v-for='(item,index) in FoodList' :key='index' :class='{active: index == currentIndex}'>
+            <li ref='category' class='foodtitleitem' v-for='(item,index) in FoodList' :key='index' :class='{active: index == currentIndex}' @click='categoryClick(index)'>
               <span>{{item.name}}</span>
             </li>
           </ul>
         </div>
       </scroll>
         <div class='right' >
-          <scroll id='right_Scroll'>
-          <div class='FoodListItem' v-for='(item,index) in FoodList' :key='index'>
+          <scroll
+          @scroll='contentScroll'
+          :probe-type='3'
+          ref='right_scroll' 
+          id='right_Scroll'>
+          <div class='FoodListItem' v-for='(item,index) in FoodList' :key='index' ref='detailItem'>
             <header>
            <span class='Itemname'>{{item.name}}</span>
            <span class='ItemDesc'>{{item.description}}</span>
             </header>
             <ul class='detailInfo'>
-              <li class='foodItem' v-for='(item,index) in item.foods'>
+              <li class='foodItem' v-for='(item,index) in item.foods' >
                 <section>
                   <div class='foodImg'>
                     <img :src="'https://elm.cangdu.org/img/' + item.image_path" >
@@ -29,7 +35,7 @@
                     <p class='foodNmae'>{{item.name}}</p>
                     <p class='foodDesc'>{{item.description}}</p>
                     <p class='foodSell'>月售{{item.month_sales}}份 好评率{{item.satisfy_rate}}%</p>
-                    <span v-if='item.activity !={}' class='foodActive'>{{item.activity.image_text}}</span>
+                    <span v-if='item.activity != null' class='foodActive'>{{ item.activity.image_text || item.activity[0].image_text }}</span>
                     <p class='foodPrice'>
                       <span class='money'>￥</span><span class='singal'>20</span> <span class='guige' v-if='item.specifications.length != 0'>起</span>
                       <span v-if='item.specifications.length != 0' class='stand foodPrice_right'>选规格</span>
@@ -75,6 +81,36 @@
             };
         },
         methods: {
+            //左边分类菜单点击事件
+            categoryClick(index) {
+                this.currentIndex = index
+                this.$refs.right_scroll.ScrollTo(0, -this.$refs.detailItem[this.currentIndex].offsetTop, 800)
+            },
+            //右边详细菜单滚动事件
+            contentScroll(position) {
+                //是否是向下滑动
+                let flag = true
+                    //记录Y值
+                let y = -position.y
+                if (y < 0) {
+                    return;
+                }
+                for (let i = 0; i < this.$refs.detailItem.length; i++) {
+                    if (this.$refs.detailItem[i].offsetTop > y) {
+                        if (this.currentIndex > i - 1) {
+                            flag = false
+                        }
+                        this.currentIndex = i - 1
+                        break
+                    }
+                }
+                let max = -this.$refs.left_scroll.scroll.maxScrollY
+                if (this.$refs.category[this.currentIndex].offsetTop > max) {
+                    this.$refs.left_scroll.ScrollTo(0, -this.$refs.category[this.currentIndex].offsetTop + max, 300)
+                }
+            }
+        },
+        mounted() {
 
         },
     }
@@ -93,6 +129,7 @@
     }
     
     .left {
+        position: relative;
         width: 13vh;
     }
     
@@ -101,12 +138,21 @@
     }
     
     .foodtitleitem {
-        padding: 3vh;
+        width: 13vh;
+        padding-top: 3vh;
+        padding-bottom: 3vh;
         padding-left: 1.4vh;
-        padding-right: 7vh;
         color: #666;
         font-size: .8rem;
         border-bottom: .025rem solid #e4e4e4;
+    }
+    
+    .foodtitleitem span {
+        display: inline-block;
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     
     .active {

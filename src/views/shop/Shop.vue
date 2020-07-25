@@ -6,7 +6,8 @@
     <shop-nav-bar class='navBar'/>
     <shop-desc :info = 'shopInfo' @showActive = 'showActive'/>
     <tab-control class='tabControl' :title='["商品","评价"]' @tabClick = 'tabClick'/>
-    <shop-food-list :food-list='FoodList'/>
+    <shop-food-list  :food-list='FoodList' @changeCart = 'changeCart'/>
+    <shop-cart />
   </div>
 </template>
 
@@ -14,8 +15,15 @@
     import ShopNavBar from './childCom/ShopNavBar'
     import ShopDesc from './childCom/ShopDesc'
     import ShopFoodList from './childCom/ShopFoodList.vue'
+    import ShopCart from './childCom/ShopCart.vue'
 
     import tabControl from 'components/content/tabcontrol/tabcontrol'
+
+    import {
+        setStore,
+        getStore,
+        removeStore
+    } from 'common/utils'
 
     import {
         getShopInfo,
@@ -27,13 +35,16 @@
             ShopNavBar,
             ShopDesc,
             tabControl,
-            ShopFoodList
+            ShopFoodList,
+            ShopCart
         },
         data() {
             return {
                 shopId: 0,
                 shopInfo: [],
-                FoodList: []
+                FoodList: [],
+                //购物车的内容
+                CartList: []
             };
         },
         computed: {
@@ -43,6 +54,7 @@
             //获取关于店铺的所有信息
             getShopInfo() {
                 this.shopId = this.$route.params.shopid
+                this.CartList = getStore('CartList') || []
                     //获取店铺的详情
                 getShopInfo(this.shopId).then(res => {
                         res.image_path = 'https://elm.cangdu.org/img/' + res.image_path
@@ -54,6 +66,17 @@
                     //获取店铺的食品页面
                 getFoodList(this.shopId).then(res => {
                     console.log(res);
+                    for (let item of res) {
+                        for (let iter of this.CartList) {
+                            if (iter.shopId === this.shopId && iter.foodListIndex === item.id) {
+                                for (let iterator of item.foods) {
+                                    if (iterator.id === iter.foodsIndex) {
+                                        iterator.__v = iter.num
+                                    }
+                                }
+                            }
+                        }
+                    }
                     this.FoodList = res
                 })
             },
@@ -64,6 +87,32 @@
             tabClick(index) {
                 console.log(index);
             },
+            //改变购物车中的数量
+            changeCart(index, id, num) {
+                this.CartList = JSON.parse(getStore('CartList')) || []
+                let CartItem = {
+                    shopId: this.shopId,
+                    foodListIndex: index,
+                    foodsIndex: id,
+                    num: num
+                }
+                removeStore('CartList')
+                if (this.CartList == []) {
+                    this.CartList.push(CartItem)
+                } else {
+                    for (let i = 0; i < this.CartList.length; i++) {
+                        if (this.CartList[i].shopId === this.shopId && this.CartList[i].foodListIndex === index && this.CartList[i].foodsIndex === id) {
+                            this.CartList[i].num = num
+                        } else {
+                            this.CartList.push(CartItem)
+                        }
+                        if (this.CartList[i].num === 0) {
+                            this.CartList.splice(i, 1)
+                        }
+                    }
+                }
+                setStore('CartList', this.CartList)
+            }
         },
         mounted() {
             this.getShopInfo()

@@ -61,7 +61,7 @@ const routes = [{
     },
     {
         path: '/shop/:shopid',
-        name: 'Shop',
+        name: 'shop',
         component: Shop
     }
 ]

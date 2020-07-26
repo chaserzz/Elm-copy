@@ -114,11 +114,11 @@
             },
             addToCart(index, id) {
                 this.FoodList[index].foods[id].__v++
-                    this.$emit('changeCart', index, id, this.FoodList[index].foods[id].__v)
+                    this.$emit('changeCart', index, id, this.FoodList[index].foods[id].__v, this.FoodList[index].foods[id].name, this.FoodList[index].foods[id].specfoods[0].price)
             },
             subToCart(index, id) {
                 this.FoodList[index].foods[id].__v--
-                    this.$emit('changeCart', index, id, this.FoodList[index].foods[id].__v)
+                    this.$emit('changeCart', index, id, this.FoodList[index].foods[id].__v, this.FoodList[index].foods[id].name, this.FoodList[index].foods[id].specfoods[0].price)
             }
         },
         mounted() {

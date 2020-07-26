@@ -72,7 +72,6 @@
         line-height: 8vh;
         font-weight: 550;
         text-align: center;
-        -webkit-tap-highlight-color: transparent;
     }
     
     p {
@@ -80,15 +79,15 @@
     }
     
     .goods_price {
-        position: relative;
-        top: .8vh;
+        position: absolute;
+        top: 1vh;
         font-size: 1rem;
         font-weight: 550;
     }
     
     .deliver_price {
-        position: relative;
-        top: 1.8vh;
+        position: absolute;
+        bottom: .8vh;
         left: .2rem;
         font-size: .7rem;
     }

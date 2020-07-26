@@ -6,8 +6,13 @@
     <shop-nav-bar class='navBar'/>
     <shop-desc :info = 'shopInfo' @showActive = 'showActive'/>
     <tab-control class='tabControl' :title='["商品","评价"]' @tabClick = 'tabClick'/>
-    <shop-food-list  :food-list='FoodList' @changeCart = 'changeCart'/>
-    <shop-cart />
+			<section class='Goods' v-if='currentIndex === 0'>
+				<shop-food-list  :food-list='FoodList' @changeCart = 'changeCart'/>
+				<shop-cart />
+			</section>
+			<section class='comments' v-else>
+				<shop-comment />
+			</section>
   </div>
 </template>
 
@@ -16,6 +21,7 @@
     import ShopDesc from './childCom/ShopDesc'
     import ShopFoodList from './childCom/ShopFoodList.vue'
     import ShopCart from './childCom/ShopCart.vue'
+    import ShopComment from './childCom/ShopComment.vue'
 
     import tabControl from 'components/content/tabcontrol/tabcontrol'
 
@@ -36,7 +42,8 @@
             ShopDesc,
             tabControl,
             ShopFoodList,
-            ShopCart
+            ShopCart,
+            ShopComment
         },
         data() {
             return {
@@ -44,7 +51,8 @@
                 shopInfo: [],
                 FoodList: [],
                 //购物车的内容
-                CartList: []
+                CartList: [],
+                currentIndex: 0
             };
         },
         computed: {
@@ -85,19 +93,21 @@
             },
             //tab栏点击
             tabClick(index) {
-                console.log(index);
+                this.currentIndex = index
             },
             //改变购物车中的数量
-            changeCart(index, id, num) {
+            changeCart(index, id, num, name, price) {
                 this.CartList = JSON.parse(getStore('CartList')) || []
                 let CartItem = {
                     shopId: this.shopId,
                     foodListIndex: index,
                     foodsIndex: id,
-                    num: num
+                    num: num,
+                    name: name,
+                    price: price,
                 }
                 removeStore('CartList')
-                if (this.CartList == []) {
+                if (this.CartList.length == 0) {
                     this.CartList.push(CartItem)
                 } else {
                     for (let i = 0; i < this.CartList.length; i++) {

@@ -11,7 +11,11 @@
 				<shop-cart />
 			</section>
 			<section class='comments' v-else>
-				<shop-comment />
+				<shop-comment 
+				:syn-comment = 'Comments' 
+				:comment-tags='commentsTags'
+				:customer-comments='customerComments'
+				/>
 			</section>
   </div>
 </template>
@@ -33,7 +37,10 @@
 
     import {
         getShopInfo,
-        getFoodList
+        getFoodList,
+        getCustomerComments,
+        getComments,
+        getCommentsTags
     } from 'network/shop.js'
     export default {
         name: 'Shop',
@@ -52,7 +59,10 @@
                 FoodList: [],
                 //购物车的内容
                 CartList: [],
-                currentIndex: 0
+                currentIndex: 0,
+                commentsTags: [],
+                customerComments: [],
+                Comments: {}
             };
         },
         computed: {
@@ -73,20 +83,34 @@
                     })
                     //获取店铺的食品页面
                 getFoodList(this.shopId).then(res => {
-                    console.log(res);
-                    for (let item of res) {
-                        for (let iter of this.CartList) {
-                            if (iter.shopId === this.shopId && iter.foodListIndex === item.id) {
-                                for (let iterator of item.foods) {
-                                    if (iterator.id === iter.foodsIndex) {
-                                        iterator.__v = iter.num
+                        for (let item of res) {
+                            for (let iter of this.CartList) {
+                                if (iter.shopId === this.shopId && iter.foodListIndex === item.id) {
+                                    for (let iterator of item.foods) {
+                                        if (iterator.id === iter.foodsIndex) {
+                                            iterator.__v = iter.num
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                    this.FoodList = res
-                })
+                        this.FoodList = res
+                    })
+                    //获得评价分类
+                getCommentsTags(this.shopId).then(res => {
+                        this.commentsTags = res
+                        console.log(res);
+                    })
+                    //获取顾客评价
+                getCustomerComments(this.shopId).then(res => {
+                        this.customerComments = res
+                        console.log(res);
+                    }),
+                    //获取评价分数
+                    getComments(this.shopId).then(res => {
+                        this.Comments = res
+                        console.log(res);
+                    })
             },
             showActive() {
                 this.showActive = true

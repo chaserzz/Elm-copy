@@ -80,14 +80,16 @@
             return {
                 currentIndex: 0,
                 //购买的物品
-                Cart: []
+                Cart: [],
+
             };
         },
         methods: {
             //左边分类菜单点击事件
             categoryClick(index) {
                 this.currentIndex = index
-                this.$refs.right_scroll.ScrollTo(0, -this.$refs.detailItem[this.currentIndex].offsetTop, 800)
+                this.temp = -this.$refs.detailItem[this.currentIndex].offsetTop
+                this.$refs.right_scroll.ScrollTo(0, -this.$refs.detailItem[this.currentIndex].offsetTop, 300)
             },
             //右边详细菜单滚动事件
             contentScroll(position) {
@@ -107,6 +109,7 @@
                         break
                     }
                 }
+
                 let max = -this.$refs.left_scroll.scroll.maxScrollY
                 if (this.$refs.category[this.currentIndex].offsetTop > max) {
                     this.$refs.left_scroll.ScrollTo(0, -this.$refs.category[this.currentIndex].offsetTop + max, 300)

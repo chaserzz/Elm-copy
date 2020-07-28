@@ -36,6 +36,7 @@
             //封装的滚动到顶部的事件
             ScrollTo(x, y, time = 500) {
                 this.scroll && this.scroll.scrollTo && this.scroll.scrollTo(x, y, time);
+                return Promise.resolve()
             },
             //封装的结束一次上拉事件
             finishPullUp() {

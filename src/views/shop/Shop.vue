@@ -11,11 +11,18 @@
 				<shop-cart />
 			</section>
 			<section class='comments' v-else>
-				<shop-comment 
-				:syn-comment = 'Comments' 
-				:comment-tags='commentsTags'
-				:customer-comments='customerComments'
-				/>
+				<scroll 
+				ref='scroll'
+				:pull-up-load='true'
+				@pullingUp = 'refreshComments'
+				id='Scroll'>
+					<shop-comment 
+					:syn-comment = 'Comments' 
+					:comment-tags='commentsTags'
+					:customer-comments='customerComments'
+					@tagClick='TagClick'
+					/>
+				</scroll>
 			</section>
   </div>
 </template>
@@ -28,6 +35,8 @@
     import ShopComment from './childCom/ShopComment.vue'
 
     import tabControl from 'components/content/tabcontrol/tabcontrol'
+
+    import scroll from 'components/common/scroll/scroll'
 
     import {
         setStore,
@@ -50,7 +59,8 @@
             tabControl,
             ShopFoodList,
             ShopCart,
-            ShopComment
+            ShopComment,
+            scroll
         },
         data() {
             return {
@@ -62,7 +72,9 @@
                 currentIndex: 0,
                 commentsTags: [],
                 customerComments: [],
-                Comments: {}
+                Comments: {},
+                tagName: '',
+                page: 1 //顾客评论的当前页数
             };
         },
         computed: {
@@ -99,17 +111,14 @@
                     //获得评价分类
                 getCommentsTags(this.shopId).then(res => {
                         this.commentsTags = res
-                        console.log(res);
                     })
                     //获取顾客评价
                 getCustomerComments(this.shopId).then(res => {
                         this.customerComments = res
-                        console.log(res);
                     }),
                     //获取评价分数
                     getComments(this.shopId).then(res => {
                         this.Comments = res
-                        console.log(res);
                     })
             },
             showActive() {
@@ -146,6 +155,23 @@
                     }
                 }
                 setStore('CartList', this.CartList)
+            },
+            //改变评论
+            TagClick(name) {
+                getCustomerComments(this.shopId, 0, name).then(res => {
+                    this.tagName = name
+                    this.customerComments = res
+                })
+            },
+            refreshComments() {
+                getCustomerComments(this.shopId, this.page * 10, this.tagName).then(res => {
+                    for (const iterator of res) {
+                        this.customerComments.push(iterator)
+                    }
+                    this.page++
+                        this.$refs.scroll.finishPullUp()
+                    this.$refs.scroll.refresh()
+                })
             }
         },
         mounted() {
@@ -155,6 +181,11 @@
 </script>
 
 <style scoped>
+    #Scroll {
+        height: calc(100vh - 19vh - 8.5vh);
+        overflow: hidden;
+    }
+    
     .Shop {
         position: relative;
         z-index: 19;

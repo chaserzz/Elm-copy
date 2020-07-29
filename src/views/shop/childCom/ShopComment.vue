@@ -10,15 +10,15 @@
 		<div class='right'>
 			<p class='service'>
 			<span class='title'>服务态度</span>	
-			<start class='start' />
+			<start class='start' :start-width='service_width' />
 			<span>{{service_score}}</span>
 				<!--星星部分-->
 			</p>
 			<p class='foods'>
 			<span class='title'>菜品评价</span>	
 				<!--星星部分-->
-				<start class='start' />
-				<span>{{service_score}}</span>
+				<start class='start' :start-width='food_width' />
+				<span>{{food_score}}</span>
 			</p>
 			<p class='deliver'>
 				<span class='title'>送达时间</span>
@@ -33,37 +33,42 @@
 				 class = 'assess_category_item satisfied'
 				 :key = 'index'
 				 :class= "{ 'active':currentIndex === index,'unsatisfied': item.unsatisfied}"	
-				 @click='tagClick(index)'
+				 @click='tagClick(index,item.name)'
 				 >
 					{{item.name}}({{item.count}})
 				</div>
 			</div>
-			<div class='detail_assess'>
+			<div v-for='(item,index) in customerComments' class='detail_assess'>
 				<section class='detail_assess_item'>
 					<header>
 						<div class='user_img'> 
 							<img src="~assets/images/touxiang.png" >
 						</div>
 						<div class='first'>
-							<span class='user_name'>4******b</span>
-							<span class='date'>2017-02-10</span>
+							<span class='user_name'>{{item.username}}</span>
+							<span class='date'>{{item.rated_at}}</span>
 						</div>
 						<div class='user_assess'>
 							<!--星星部分-->
 							<start />
 						</div>
-						<span class='fontComments'>按时送达</span>
+						<span class='fontComments'>{{item.time_spent_desc}}</span>
 					</header>
-					<footer>
-						<div class='user_assrss_img'>
-							<img src="" alt="">
+					<footer >
+						<div class='image_wrap'>
+							<img 
+							v-for='(foodItem,keys) in item.item_ratings' 
+							class='user_assrss_img' 
+							:key='keys'
+							:src=" 'https://fuss10.elemecdn.com/' + foodItem.image_hash"
+							>
 						</div>
 						<ul class='user_buy_foods'>
-							<li>
-							<span>韩式炸鸡</span>	
-							</li>
-							<li>
-							<span>韩式炸鸡</span>	
+							<li 							
+							v-for='(nameItem,theKey) in item.item_ratings' 
+							:key='theKey'
+							>
+							<span>{{nameItem.food_name}}</span>	
 							</li>
 						</ul>
 					</footer>
@@ -95,14 +100,17 @@
                 default () {
                     return []
                 }
-            }
+            },
+
         },
         components: {
             Start
         },
         data() {
             return {
-                currentIndex: 0
+                currentIndex: 0,
+                service_width: {},
+                food_width: {}
             };
         },
         computed: {
@@ -110,19 +118,29 @@
                 return this.synComment.overall_score.toFixed(1)
             },
             service_score() {
+                this.service_width = {
+                    width: (this.synComment.service_score / 5.0) * 3.0 + 'rem'
+                }
                 return this.synComment.service_score.toFixed(1)
             },
             food_score() {
+                this.food_width = {
+                    width: (this.synComment.food_score / 5.0) * 3.0 + 'rem'
+                }
                 return this.synComment.food_score.toFixed(1)
             },
             compare_rating() {
                 return this.synComment.compare_rating.toFixed(3) * 100
-            }
+            },
         },
         methods: {
-            tagClick(index) {
+            tagClick(index, name) {
                 this.currentIndex = index
+                this.$emit('tagClick', name)
             }
+        },
+        mounted() {
+
         },
     }
 </script>
@@ -226,7 +244,7 @@
     .first {
         display: inline-block;
         font-family: Helvetica, Tahoma, Arial;
-        margin-left: 4%;
+        margin-left: 4.1%;
     }
     
     .user_name {
@@ -247,7 +265,7 @@
     .user_assess {
         position: absolute;
         top: 3vh;
-        left: 14.6%;
+        left: 14.9%;
     }
     
     .fontComments {
@@ -288,5 +306,14 @@
     .active {
         background-color: #3190e8;
         color: #fff;
+    }
+    
+    .image_wrap {
+        margin-left: 15%;
+    }
+    
+    .image_wrap img {
+        width: 3.2rem;
+        height: 3.2rem;
     }
 </style>

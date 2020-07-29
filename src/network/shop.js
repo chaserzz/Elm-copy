@@ -18,12 +18,11 @@ export function getFoodList(restaurant_id) {
 }
 
 //获取顾客评价信息
-export function getCustomerComments(restaurant_id, offset, limit, tag_name) {
+export function getCustomerComments(restaurant_id, offset, tag_name) {
     return request({
         url: 'https://elm.cangdu.org/ugc/v2/restaurants/' + restaurant_id + '/ratings',
         querys: {
             offset,
-            limit,
             tag_name
         },
     })

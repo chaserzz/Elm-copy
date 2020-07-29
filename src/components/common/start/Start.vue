@@ -17,25 +17,7 @@
     export default {
         name: 'Start',
         props: {
-            startWidth: {
-                type: Object,
-                default () {
-                    return {
-                        width: 0
-                    }
-                }
-            }
-        },
-        data() {
-            return {
-
-            };
-        },
-        computed: {
-
-        },
-        methods: {
-
+            startWidth: {}
         },
     }
 </script>

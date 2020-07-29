@@ -81,7 +81,7 @@
                 currentIndex: 0,
                 //购买的物品
                 Cart: [],
-
+                followScroll: true
             };
         },
         methods: {
@@ -89,30 +89,36 @@
             categoryClick(index) {
                 this.currentIndex = index
                 this.temp = -this.$refs.detailItem[this.currentIndex].offsetTop
-                this.$refs.right_scroll.ScrollTo(0, -this.$refs.detailItem[this.currentIndex].offsetTop, 300)
+                this.followScroll = false
+                this.$refs.right_scroll.ScrollTo(0, -this.$refs.detailItem[this.currentIndex].offsetTop, 500)
+                setTimeout(() => {
+                    this.followScroll = true
+                }, 10)
             },
             //右边详细菜单滚动事件
             contentScroll(position) {
-                //是否是向下滑动
-                let flag = true
-                    //记录Y值
-                let y = -position.y
-                if (y < 0) {
-                    return;
-                }
-                for (let i = 0; i < this.$refs.detailItem.length; i++) {
-                    if (this.$refs.detailItem[i].offsetTop > y) {
-                        if (this.currentIndex > i - 1) {
-                            flag = false
-                        }
-                        this.currentIndex = i - 1
-                        break
+                if (this.followScroll) {
+                    //是否是向下滑动
+                    let flag = true
+                        //记录Y值
+                    let y = -position.y
+                    if (y < 0) {
+                        return;
                     }
-                }
+                    for (let i = 0; i < this.$refs.detailItem.length; i++) {
+                        if (this.$refs.detailItem[i].offsetTop > y) {
+                            if (this.currentIndex > i - 1) {
+                                flag = false
+                            }
+                            this.currentIndex = i - 1
+                            break
+                        }
+                    }
 
-                let max = -this.$refs.left_scroll.scroll.maxScrollY
-                if (this.$refs.category[this.currentIndex].offsetTop > max) {
-                    this.$refs.left_scroll.ScrollTo(0, -this.$refs.category[this.currentIndex].offsetTop + max, 300)
+                    let max = -this.$refs.left_scroll.scroll.maxScrollY
+                    if (this.$refs.category[this.currentIndex].offsetTop > max) {
+                        this.$refs.left_scroll.ScrollTo(0, -this.$refs.category[this.currentIndex].offsetTop + max, 300)
+                    }
                 }
             },
             addToCart(index, id) {

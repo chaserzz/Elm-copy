@@ -79,8 +79,8 @@
                         }
                         this.storeInfo.push(item)
                     }
-                    this.storePage++;
-                    this.$refs.scroll.finishPullUp();
+                    this.storePage++
+                        this.$refs.scroll.finishPullUp()
                 })
             }
         },

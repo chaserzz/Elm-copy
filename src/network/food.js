@@ -9,7 +9,7 @@ export function getCategoryList(id) {
 export function getStoreInfo(latitude, longitude, offset = 0, restaurant_category_id, order_by, restaurant_category_ids = '') {
     return request({
         url: '/shopping/restaurants',
-        params: {
+        querys: {
             latitude,
             longitude,
             offset,

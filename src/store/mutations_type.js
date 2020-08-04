@@ -1,2 +1,1 @@
-export const SETLATITUDE = 'setlatitude'
-export const SETLONGTITUDE = 'setlongitude'
+export const SETTEXT = 'settext'

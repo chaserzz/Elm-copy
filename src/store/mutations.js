@@ -1,10 +1,8 @@
-import { SETLATITUDE, SETLONGTITUDE } from './mutations_type'
+import { SETTEXT } from './mutations_type'
 
 export default {
-    [SETLATITUDE](state, payload) {
-        state.latitude = payload
+    [SETTEXT](state, payload) {
+        state.text = payload
     },
-    [SETLONGTITUDE](state, payload) {
-        state.longitude = payload
-    }
+
 }

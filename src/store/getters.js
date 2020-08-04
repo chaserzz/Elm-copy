@@ -1,8 +1,5 @@
 export default {
-    getlongitude(state) {
-        return state.longitude
+    gettext(state) {
+        return state.text
     },
-    getlatitude(state) {
-        return state.latitude
-    }
 }

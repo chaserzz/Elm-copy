@@ -67,6 +67,7 @@
                 shopId: 0,
                 shopInfo: [],
                 FoodList: [],
+                receiveInCart: false,
                 //购物车的内容
                 CartList: [],
                 currentIndex: 0,

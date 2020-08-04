@@ -178,6 +178,7 @@
     
     .active {
         background-color: #fff;
+        transition: all cubic-bezier(.01, .12, 0, .97) 2s;
     }
     
     .right {
@@ -312,7 +313,7 @@
     
     .fade-choose-enter-active,
     .fade-choose-leave-active {
-        transition: opacity .5s;
+        transition: opacity 3s;
     }
     
     .fade-choose-leave,

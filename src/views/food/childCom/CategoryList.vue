@@ -155,10 +155,11 @@
             //小分类li的点击
             categoryClick(index) {
                 this.detailList = this.categoryList[index].sub_categories
-                this.currentIndex = index;
+                this.currentIndex = index
             },
             //最终分类的点击,将发送给父组件
             changClick(item) {
+                this.sortBy = ''
                 this.$emit('change', item)
             },
             orderClick(id) {

@@ -8,7 +8,13 @@
     <tab-control class='tabControl' :title='["商品","评价"]' @tabClick = 'tabClick'/>
 			<section class='Goods' v-if='currentIndex === 0'>
 				<shop-food-list  :food-list='FoodList' @changeCart = 'changeCart'/>
-				<shop-cart />
+				<shop-cart 
+				class='shopcart'
+				:cart-data='CurrtentCartData' 
+				:receive='receiveInCart' 
+				:mini-order-fee ='shopInfo.float_minimum_order_amount' 
+				:deliver-fee = 'shopInfo.float_delivery_fee'
+				/>
 			</section>
 			<section class='comments' v-else>
 				<scroll 
@@ -75,7 +81,8 @@
                 customerComments: [],
                 Comments: {},
                 tagName: '',
-                page: 1 //顾客评论的当前页数
+                page: 1, //顾客评论的当前页数,
+                CurrtentCartData: [],
             };
         },
         computed: {
@@ -85,7 +92,19 @@
             //获取关于店铺的所有信息
             getShopInfo() {
                 this.shopId = this.$route.params.shopid
-                this.CartList = getStore('CartList') || []
+                this.CartList = JSON.parse(getStore('CartList')) || []
+                for (let i = 0; i < this.CartList.length - 1; i++) {
+                    if (this.CartList[i].shopId == this.shopId && this.CartList[i].foodListIndex == this.CartList[i + 1].foodListIndex && this.CartList[i].foodsIndex == this.CartList[i + 1].foodsIndex) {
+                        this.CartList.splice(i, 1)
+                        i--
+                    }
+                }
+                for (let i = 0; i < this.CartList.length - 1; i++) {
+                    if (this.CartList[i].num === 0) {
+                        this.CartList.splice(i, 1)
+                    }
+                }
+                this.getCartData()
                     //获取店铺的详情
                 getShopInfo(this.shopId).then(res => {
                         res.image_path = 'https://elm.cangdu.org/img/' + res.image_path
@@ -130,7 +149,8 @@
                 this.currentIndex = index
             },
             //改变购物车中的数量
-            changeCart(index, id, num, name, price) {
+            changeCart(index, id, num, name, price, isAdd) {
+                if (isAdd) this.receiveInCart = true
                 this.CartList = JSON.parse(getStore('CartList')) || []
                 let CartItem = {
                     shopId: this.shopId,
@@ -145,7 +165,7 @@
                     this.CartList.push(CartItem)
                 } else {
                     for (let i = 0; i < this.CartList.length; i++) {
-                        if (this.CartList[i].shopId === this.shopId && this.CartList[i].foodListIndex === index && this.CartList[i].foodsIndex === id) {
+                        if (this.CartList[i].shopId == this.shopId && this.CartList[i].foodListIndex == index && this.CartList[i].foodsIndex == id) {
                             this.CartList[i].num = num
                         } else {
                             this.CartList.push(CartItem)
@@ -155,7 +175,20 @@
                         }
                     }
                 }
+                this.getCartData()
+                setTimeout(() => {
+                    this.receiveInCart = false
+                }, 500)
                 setStore('CartList', this.CartList)
+            },
+            getCartData() {
+                let cartlist = []
+                for (const iterator of this.CartList) {
+                    if (iterator.shopId == this.shopId && iterator.num !== 0) {
+                        cartlist.push(iterator)
+                    }
+                }
+                this.CurrtentCartData = cartlist
             },
             //改变评论
             TagClick(name) {
@@ -192,6 +225,7 @@
         z-index: 19;
         height: 100vh;
         background-color: #f5f5f5;
+        overflow: hidden;
     }
     
     .navBar {

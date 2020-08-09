@@ -41,7 +41,7 @@
                       <span v-if='item.specifications.length != 0' class='stand foodPrice_right'>选规格</span>
                       <span v-else class='foodPrice_right'>
                          <!-- 减号 -->
-                        <svg @click='subToCart(index,id)'  v-if = 'item.__v !== 0' t="1595580263309" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6695" width="19" height="19"><path d="M512 149.333333c200.298667 0 362.666667 162.368 362.666667 362.666667s-162.368 362.666667-362.666667 362.666667S149.333333 712.298667 149.333333 512 311.701333 149.333333 512 149.333333z m-192 330.666667v64h384v-64H320z" p-id="6696" fill="#1296db"></path></svg>
+                        <svg @click='subToCart(index,id)'  v-if = 'item.__v !== 0' t="1595580263309" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6695" width="19" height="19"><path d="M512 149.333333c200.298667 0 362.666667 162.368 362.666667 362.666667s-162.368 362.666667-362.666667 362.666667S149.333333 712.298667 149.333333 512 311.701333 149.333333 512 149.333333z m-192 330.666667v64h384v-64H320z" p-id="6696" fill="#000"></path></svg>
                         <span class='num' v-if = 'item.__v !== 0'>{{item.__v}}</span>
                          <!--加号 -->
                         <svg  @click='addToCart(index,id)' t="1595580245577" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6413" width="19" height="19"><path d="M512 149.333333c200.298667 0 362.666667 162.368 362.666667 362.666667s-162.368 362.666667-362.666667 362.666667S149.333333 712.298667 149.333333 512 311.701333 149.333333 512 149.333333z m32 170.666667h-64v159.978667L320 480v64l160-0.021333V704h64v-160H704v-64h-160V320z" p-id="6414" fill="#1296db"></path></svg>                    
@@ -67,6 +67,12 @@
         name: 'ShopFoodList',
         props: {
             FoodList: {
+                type: Array,
+                default () {
+                    return []
+                }
+            },
+            CartData: {
                 type: Array,
                 default () {
                     return []

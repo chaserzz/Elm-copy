@@ -115,18 +115,15 @@
                     })
                     //获取店铺的食品页面
                 getFoodList(this.shopId).then(res => {
+                        console.log(res);
                         for (let item of res) {
                             for (let iter of this.CartList) {
-                                if (iter.shopId === this.shopId && iter.foodListIndex === item.id) {
-                                    for (let iterator of item.foods) {
-                                        if (iterator.id === iter.foodsIndex) {
-                                            iterator.__v = iter.num
-                                        }
-                                    }
+                                if (iter.shopId === this.shopId) {
+                                    res[iter.foodListIndex].foods[iter.foodsIndex].__v = iter.num
                                 }
                             }
+                            this.FoodList = res
                         }
-                        this.FoodList = res
                     })
                     //获得评价分类
                 getCommentsTags(this.shopId).then(res => {

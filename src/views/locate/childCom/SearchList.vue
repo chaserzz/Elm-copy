@@ -74,7 +74,7 @@
     .keywords_address {
         width: 90%;
         margin: 0 auto 0.4rem;
-        font-size: .45rem;
+        font-size: .65rem;
         color: #999;
         overflow: hidden;
         text-overflow: ellipsis;

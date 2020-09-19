@@ -81,7 +81,7 @@
         position: absolute;
         z-index: 1;
         width: 100%;
-        height: 19vh;
+        height: 6.5rem;
         overflow: hidden;
     }
     
@@ -94,7 +94,7 @@
     .shop_desc {
         position: relative;
         width: 100%;
-        height: 19vh;
+        height: 6.5rem;
         z-index: 9;
         background-color: rgba(195, 185, 198, .85);
         color: #fff;

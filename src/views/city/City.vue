@@ -27,7 +27,7 @@
       <!--热门城市-->
       <div class='hot'>
         <city-list 
-        :city-list='hotCity'  
+        :city-list='hotCity'
         fontColor='#3190e8' 
         title='热门城市'
         />
@@ -131,6 +131,7 @@
         height: 100vh;
         z-index: 99;
         background-color: #fff;
+        overflow: hidden;
     }
     /*导航栏*/
     
@@ -147,7 +148,6 @@
     }
     
     .right {
-        width: 60px !important;
         transform: translateX(-1.7rem);
     }
     /*提示栏*/

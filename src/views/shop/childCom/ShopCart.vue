@@ -282,6 +282,7 @@
     .CartDetail {
         position: absolute;
         bottom: 8vh;
+        display: none;
     }
     
     .block {

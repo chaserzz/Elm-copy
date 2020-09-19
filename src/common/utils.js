@@ -39,3 +39,30 @@ export const removeStore = name => {
     if (!name) return;
     window.localStorage.removeItem(name);
 }
+
+/**
+ * 存储session存储
+ */
+export const setSectionStore = (name, content) => {
+    if (!name) return;
+    if (typeof content !== 'string') {
+        content = JSON.stringify(content);
+    }
+    window.sessionStorage.setItem(name, content);
+}
+
+/**
+ * 获取session存储
+ */
+export const getSectionStore = name => {
+    if (!name) return;
+    return window.sessionStorage.getItem(name);
+}
+
+/**
+ * 删除localStorage
+ */
+export const removeSectionStore = name => {
+    if (!name) return;
+    window.sessionStorage.removeItem(name);
+}

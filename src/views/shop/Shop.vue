@@ -2,12 +2,12 @@
     这是店铺页面
 -->
 <template>
-  <div class='Shop'>
+  <div class='Shop' >
     <shop-nav-bar class='navBar'/>
     <shop-desc :info = 'shopInfo' @showActive = 'showActive'/>
     <tab-control class='tabControl' :title='["商品","评价"]' @tabClick = 'tabClick'/>
 			<section class='Goods' v-if='currentIndex === 0'>
-				<shop-food-list  :food-list='FoodList' @changeCart = 'changeCart'/>
+				<shop-food-list   :finish-load='FoodLoadFinish' :food-list='FoodList' @changeCart = 'changeCart'/>
 				<shop-cart 
 				class='shopcart'
 				:cart-data='CurrtentCartData' 
@@ -83,6 +83,7 @@
                 tagName: '',
                 page: 1, //顾客评论的当前页数,
                 CurrtentCartData: [],
+                FoodLoadFinish:false
             };
         },
         computed: {
@@ -123,6 +124,7 @@
                                 }
                             }
                             this.FoodList = res
+                            this.FoodLoadFinish = true
                         }
                     })
                     //获得评价分类

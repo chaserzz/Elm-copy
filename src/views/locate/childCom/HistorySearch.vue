@@ -98,7 +98,7 @@
         top: .2rem;
         width: 90%;
         margin: 0 auto;
-        font: .475rem/.8rem Microsoft YaHei;
+        font-size: .8rem;
     }
     
     li {

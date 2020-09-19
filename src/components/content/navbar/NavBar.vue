@@ -42,7 +42,11 @@
         width: 45px;
         height: 42px;
     }
-    
+    .right{
+        width: 4rem;
+        position: relative;
+        left:.5rem;
+    }
     .center {
         flex: 1;
     }

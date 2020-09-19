@@ -94,8 +94,8 @@
     }
     
     .storeListItem img {
-        width: 4rem;
-        height: 4rem;
+        width: 4.2rem;
+        height: 4.2rem;
     }
     /*第一行*/
     

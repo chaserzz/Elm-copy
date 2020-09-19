@@ -90,6 +90,7 @@
         position: relative;
         z-index: 9;
         background-color: #f5f5f5;
+        overflow: hidden;
     }
     
     #Scroll {
@@ -112,7 +113,7 @@
     .search_wrap input {
         display: block;
         width: 100%;
-        height: 1.75rem;
+        height: 2rem;
         margin-bottom: .62rem;
         border: 1px solid #e4e4e4;
     }

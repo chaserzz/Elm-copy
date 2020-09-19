@@ -5,7 +5,9 @@
     <div>
       <scroll 
       ref='left_scroll'
-      id='left_Scroll'>
+      id='left_Scroll'
+      :probe-type='3'
+      >
         <div class='left'>
           <ul class='foodtitle'>
             <li ref='category' class='foodtitleitem' v-for='(item,index) in FoodList' :key='index' :class='{active: index == currentIndex}' @click='categoryClick(index)'>
@@ -77,6 +79,10 @@
                 default () {
                     return []
                 }
+            },  
+            finishLoad:{
+                type:Boolean,
+                default:false
             }
         },
         components: {
@@ -94,7 +100,6 @@
             //左边分类菜单点击事件
             categoryClick(index) {
                 this.currentIndex = index
-                this.temp = -this.$refs.detailItem[this.currentIndex].offsetTop
                 this.followScroll = false
                 this.$refs.right_scroll.ScrollTo(0, -this.$refs.detailItem[this.currentIndex].offsetTop, 500)
                 setTimeout(() => {
@@ -120,11 +125,8 @@
                             break
                         }
                     }
-
                     let max = -this.$refs.left_scroll.scroll.maxScrollY
-                    if (this.$refs.category[this.currentIndex].offsetTop > max) {
-                        this.$refs.left_scroll.ScrollTo(0, -this.$refs.category[this.currentIndex].offsetTop + max, 300)
-                    }
+
                 }
             },
             addToCart(index, id) {
@@ -137,8 +139,9 @@
             }
         },
         mounted() {
-
+         this.$refs.left_scroll.refresh()
         },
+        
     }
 </script>
 

@@ -8,7 +8,7 @@
             :probe-type='3'
             @pullingUp='lodaData'>
         <home-swiper :foodList1='foodPage1' :foodList2='foodPage2' :longitude ='longitude' :latitude = 'latitude'/>
-        <home-store-info :storeInfo='storeInfo'/>
+        <home-store-info  v-show='FinishLoad' :storeInfo='storeInfo'/>
     </scroll>
 
   </div>
@@ -39,7 +39,8 @@
             HomeSwiper,
             HomeStoreInfo,
             //BS插件
-            Scroll
+            Scroll,
+
         },
         //将mixins插入Vue中
         mixins: [itemImgLoad],
@@ -59,7 +60,9 @@
                 foodPage1: [],
                 foodPage2: [],
                 storeInfo: [],
-                storePage: 0
+                storePage: 0,
+                //需要的商品数据全部加载完毕
+                FinishLoad:false
             };
         },
         computed: {
@@ -82,6 +85,7 @@
                     this.storePage++
                         this.$refs.scroll.finishPullUp()
                 })
+                this.FinishLoad=true
             }
         },
         beforeMount() {
@@ -97,7 +101,7 @@
             })
             this._getStoreInfo()
 
-
+ 
             getFoodCategory().then(res => {
                 for (let item of res) {
                     item.image_url = 'https://fuss10.elemecdn.com/' + item.image_url
@@ -115,7 +119,11 @@
 </script>
 
 <style scoped>
+    .Home{
+    overflow: hidden;
+        }
     #Scroll {
         height: calc(100vh - 50px - 42px);
+        
     }
 </style>

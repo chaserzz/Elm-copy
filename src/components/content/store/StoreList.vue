@@ -2,6 +2,7 @@
 <template>
   <div class='storeList'>
     <store-list-item 
+    class='item'
     v-for='(item,index) in storeList' 
     :store-item='item' 
     :key='index'/>
@@ -38,5 +39,8 @@
 </script>
 
 <style scoped>
-
+.item{
+    position: relative;
+    left:.1rem;
+}
 </style>

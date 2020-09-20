@@ -42,7 +42,6 @@
         </footer>
       </div>
     </div>  
-
   </div>
 </template>
 
@@ -75,13 +74,16 @@
 <style scoped>
     .shopDesc {
         position: relative;
+        height: 19vh;
+        overflow: hidden;
     }
     
     .bgPic {
         position: absolute;
+        box-sizing: border-box;
         z-index: 1;
         width: 100%;
-        height: 6.5rem;
+        height: 100%;
         overflow: hidden;
     }
     
@@ -94,7 +96,7 @@
     .shop_desc {
         position: relative;
         width: 100%;
-        height: 6.5rem;
+        height: 19vh;
         z-index: 9;
         background-color: rgba(195, 185, 198, .85);
         color: #fff;

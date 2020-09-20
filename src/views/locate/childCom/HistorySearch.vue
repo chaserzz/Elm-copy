@@ -53,7 +53,7 @@
             GoHome(item) {
                 setStore('geohash', item.geohash + '')
                 this.$router.push({
-                    path: '/home/' + item.geohash
+                    path: '/medium/home/' + item.geohash
                 })
             }
         },
@@ -87,7 +87,7 @@
     .keywords_address {
         width: 90%;
         margin: 0 auto 0.4rem;
-        font-size: .45rem;
+        font-size: .65rem;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

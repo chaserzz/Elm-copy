@@ -4,7 +4,7 @@
 <template>
   <div class='tabbar'>
     <tab-bar class='tabbar'>
-      <tab-bar-item path='/home' @click.native='HomeClick()' :stop='true' activeColor='#1bbffc'>
+      <tab-bar-item path='/medium/home' @click.native='HomeClick()' :stop='true' activeColor='#1bbffc'>
         <div slot="item-icon">
           <img src="~assets/images/tabbar/elm.png" alt="">
         </div>
@@ -13,7 +13,7 @@
         </div>
         <div slot="item-text">主页</div>
       </tab-bar-item>
-      <tab-bar-item path='/discover' @click.native='DiscoverClick()' :stop='true'  activeColor='#1bbffc'>
+      <tab-bar-item path='/medium/discover' @click.native='DiscoverClick()' :stop='true'  activeColor='#1bbffc'>
         <div slot="item-icon">          
           <img src="~assets/images/tabbar/discover.png" alt="">
         </div>
@@ -22,7 +22,7 @@
         </div>
         <div slot="item-text">发现</div>
       </tab-bar-item>
-      <tab-bar-item path='/order' activeColor='#1bbffc'>
+      <tab-bar-item path='/medium/order' @click.native='OrderClick()' activeColor='#1bbffc'>
         <div slot="item-icon"> 
            <img src="~assets/images/tabbar/order.png" alt="">
          </div>
@@ -31,7 +31,7 @@
         </div>
         <div slot="item-text">订单</div>
       </tab-bar-item>
-      <tab-bar-item path='/profile' activeColor='#1bbffc'>
+      <tab-bar-item path='/medium/profile' @click.native='ProfileClick()' activeColor='#1bbffc'>
         <div slot="item-icon">       
           <img src="~assets/images/tabbar/profile.png" alt="">
         </div>
@@ -68,15 +68,25 @@
             HomeClick() {
                 this.geohash = getStore('geohash')
                 this.$router.push({
-                    path: '/home/' + this.geohash
+                    path: '/medium/home/' + this.geohash
                 })
             },
             DiscoverClick() {
                 this.geohash = getStore('geohash')
                 this.$router.push({
-                    path: '/discover/' + this.geohash
+                    path: '/medium/discover/' + this.geohash
                 })
             },
+            OrderClick(){
+                this.$router.push({
+                    path: '/medium/order/' 
+                })
+            },
+            ProfileClick(){
+                this.$router.push({
+                    path: '/medium/profile/' 
+                })
+            }
         },
     }
 </script>

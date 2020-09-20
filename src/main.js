@@ -4,7 +4,12 @@ import router from './router'
 import store from './store'
 //引入吐司插件
 import toast from 'components/common/toast'
-
+// 解决Uncaught (in promise) NavigationDuplicated {_name:""NavigationDuplicated"的报错
+import Router from 'vue-router'
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+}
 Vue.use(toast);
 
 Vue.config.productionTip = false

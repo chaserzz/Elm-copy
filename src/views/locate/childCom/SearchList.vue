@@ -56,7 +56,7 @@
                 }
                 setStore('geohash', item.geohash + '')
                 this.$router.push({
-                    path: '/home/' + item.geohash
+                    path: '/medium/home/' + item.geohash
                 })
             }
         },

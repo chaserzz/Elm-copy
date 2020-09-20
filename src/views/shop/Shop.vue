@@ -6,17 +6,19 @@
     <shop-nav-bar class='navBar'/>
     <shop-desc :info = 'shopInfo' @showActive = 'showActive'/>
     <tab-control class='tabControl' :title='["商品","评价"]' @tabClick = 'tabClick'/>
-			<section class='Goods' v-if='currentIndex === 0'>
-				<shop-food-list   :finish-load='FoodLoadFinish' :food-list='FoodList' @changeCart = 'changeCart'/>
-				<shop-cart 
-				class='shopcart'
-				:cart-data='CurrtentCartData' 
-				:receive='receiveInCart' 
-				:mini-order-fee ='shopInfo.float_minimum_order_amount' 
-				:deliver-fee = 'shopInfo.float_delivery_fee'
-				/>
+    <div class='shopContent'>
+			<section class='Goods'  v-show='currentIndex === 0'>
+				<shop-food-list class='foodList'   :finish-load='FoodLoadFinish' :food-list='FoodList' @changeCart = 'changeCart'/>
+		    	<section class='shopcart'>
+                	<shop-cart  
+			    	:cart-data='CurrtentCartData' 
+		    		:receive='receiveInCart' 
+		    		:mini-order-fee ='shopInfo.float_minimum_order_amount' 
+		    		:deliver-fee = 'shopInfo.float_delivery_fee'
+	    			/>
+                </section>
 			</section>
-			<section class='comments' v-else>
+			<section class='comments' v-if='currentIndex != 0'>
 				<scroll 
 				ref='scroll'
 				:pull-up-load='true'
@@ -30,6 +32,7 @@
 					/>
 				</scroll>
 			</section>
+    </div>
   </div>
 </template>
 
@@ -116,7 +119,6 @@
                     })
                     //获取店铺的食品页面
                 getFoodList(this.shopId).then(res => {
-                        console.log(res);
                         for (let item of res) {
                             for (let iter of this.CartList) {
                                 if (iter.shopId === this.shopId) {
@@ -214,26 +216,38 @@
 </script>
 
 <style scoped>
-    #Scroll {
-        height: calc(100vh - 19vh - 8.5vh);
-        overflow: hidden;
-    }
-    
     .Shop {
-        position: relative;
-        z-index: 19;
         height: 100vh;
         background-color: #f5f5f5;
         overflow: hidden;
     }
-    
+    #Scroll {
+        height: calc(100vh - 19vh);
+        overflow: hidden;
+    }
     .navBar {
         position: absolute;
         left: -.8rem;
         z-index: 100;
     }
-    
+
     .tabControl {
         border-bottom: .025rem solid #e4e4e4;
+    }
+
+    .shopcart{
+    position: relative;
+    }
+    .shopContent{
+    position: relative;
+    height:calc(100vh - 19vh - 8.5vh);
+    }
+    .Goods{
+        height: 100%;
+    }
+    .shopcart{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
     }
 </style>

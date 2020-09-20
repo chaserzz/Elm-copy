@@ -84,7 +84,7 @@
 
 <style scoped>
     .profile {
-        height: 100vh;
+        height: calc(100vh - 52px);
         background-color: #f5f5f5;
         overflow: hidden;
     }

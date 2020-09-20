@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
 const Home = () =>
     import ("views/home/Home.vue")
 const Discover = () =>
@@ -17,6 +16,8 @@ const Food = () =>
     import ("views/food/Food")
 const Shop = () =>
     import ("views/shop/Shop")
+const Medium = () =>
+    import ("views/medium/Medium")
 
 Vue.use(VueRouter)
 
@@ -35,9 +36,29 @@ const routes = [{
         component: Locate
     },
     {
-        path: '/home/:geohash',
-        name: 'Home',
-        component: Home
+        path: '/medium',
+        component: Medium,
+        name: 'Medium',
+        children: [{
+                path: '/medium/home/:geohash',
+                name: 'Home',
+                component: Home
+            }, {
+                path: '/medium/discover/:geohash',
+                name: 'Discover',
+                component: Discover
+            },
+            {
+                path: '/medium/order/',
+                name: 'Order',
+                component: Order
+            },
+            {
+                path: '/medium/profile/',
+                name: 'Profile',
+                component: Profile
+            },
+        ]
     },
     {
         path: '/food/:longitude/:latitude/:name/:id',
@@ -45,24 +66,9 @@ const routes = [{
         component: Food
     },
     {
-        path: '/discover/:geohash',
-        name: 'Discover',
-        component: Discover
-    },
-    {
-        path: '/order',
-        name: 'Order',
-        component: Order
-    },
-    {
-        path: '/profile',
-        name: 'Profile',
-        component: Profile
-    },
-    {
         path: '/shop/:shopid',
         name: 'Shop',
-        component: Shop
+        component: Shop,
     }
 ]
 

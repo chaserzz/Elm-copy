@@ -148,18 +148,20 @@
 <style scoped>
     #left_Scroll,
     #right_Scroll {
-        overflow: hidden;
-        height: calc(100vh - 19vh - 8.5vh - 8vh);
+      height:calc(100vh - 19vh - 8.5vh - 46px);
+      overflow: hidden;
     }
     
     .FoodList {
         position: relative;
+        height: 100%;
         background-color: #f5f5f5;
     }
     
     .left {
         position: relative;
         width: 13vh;
+        overflow: hidden;
     }
     
     .foodtitle {
@@ -196,6 +198,7 @@
         height: 100%;
         top: 0;
         left: 13vh;
+        overflow: hidden;
     }
     
     header {
@@ -319,7 +322,6 @@
         margin: 0 .3rem;
         top: -5px;
     }
-    
     .fade-choose-enter-active,
     .fade-choose-leave-active {
         transition: opacity 3s;

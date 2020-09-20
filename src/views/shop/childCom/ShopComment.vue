@@ -38,7 +38,7 @@
 					{{item.name}}({{item.count}})
 				</div>
 			</div>
-			<div v-for='(item,index) in customerComments' class='detail_assess'>
+			<div v-for='(item,index) in customerComments' :key="index" class='detail_assess'>
 				<section class='detail_assess_item'>
 					<header>
 						<div class='user_img'> 
@@ -316,4 +316,5 @@
         width: 3.2rem;
         height: 3.2rem;
     }
+
 </style>

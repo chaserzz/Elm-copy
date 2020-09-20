@@ -45,7 +45,7 @@
         height: 8.5vh;
         line-height: 8.5vh;
         text-align: center;
-        font-size: .75rem;
+        font-size: .9rem;
         color: #666;
         background-color: #fff;
     }

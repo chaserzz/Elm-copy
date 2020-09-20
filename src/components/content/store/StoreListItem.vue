@@ -173,7 +173,9 @@
     /*星星部分结束*/
     
     .second {
+        position: relative;
         display: flex;
+        z-index: -1;
         margin-left: 0.5rem;
         margin-top: 0.5rem;
     }

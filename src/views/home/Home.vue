@@ -16,7 +16,7 @@
 
 <script>
     //子组件
-    import HomeNavBar from './childCom/HomeNavBar'
+     import HomeNavBar from './childCom/HomeNavBar'
     import HomeSwiper from './childCom/HomeSwiper.vue'
     import HomeStoreInfo from './childCom/HomeStoreInfo.vue'
     //Home组件相关数据的获取
@@ -40,7 +40,7 @@
             HomeStoreInfo,
             //BS插件
             Scroll,
-
+            //Tab切换栏
         },
         //将mixins插入Vue中
         mixins: [itemImgLoad],
@@ -123,7 +123,7 @@
     overflow: hidden;
         }
     #Scroll {
-        height: calc(100vh - 50px - 42px);
+        height: calc(100vh - 49px - 42px);
         
     }
 </style>

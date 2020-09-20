@@ -71,9 +71,6 @@
                 goPay: false
             };
         },
-        computed: {
-
-        },
         watch: {
             cartData() {
                 let totalGoods = 0
@@ -172,7 +169,6 @@
     }
     
     .BottomBar {
-        height: 100%;
         width: 100%;
     }
     
@@ -181,9 +177,8 @@
     }
     
     .ShopCart {
-        position: relative;
         z-index: 2;
-        height: 8vh;
+        height: 45px;
         border: none;
         background-color: #333;
         color: white;
@@ -217,7 +212,7 @@
         padding-right: .5rem;
         border: none;
         width: 6rem;
-        height: 8vh;
+        height: 45px;
         top: 50%;
         right: 0;
         z-index: 3;

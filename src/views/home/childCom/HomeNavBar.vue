@@ -45,7 +45,7 @@
                 })
             },
             goProfile() {
-                this.$router.push('/profile')
+                this.$router.push('/medium/profile/')
             }
         },
     }

@@ -18,7 +18,8 @@ const Shop = () =>
     import ("views/shop/Shop")
 const Medium = () =>
     import ("views/medium/Medium")
-
+const Register = () =>
+    import ("views/register/Register")
 Vue.use(VueRouter)
 
 const routes = [{
@@ -69,6 +70,11 @@ const routes = [{
         path: '/shop/:shopid',
         name: 'Shop',
         component: Shop,
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        component: Register
     }
 ]
 

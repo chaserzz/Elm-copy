@@ -136,31 +136,54 @@
             subToCart(index, id) {
                 this.FoodList[index].foods[id].__v--
                     this.$emit('changeCart', index, id, this.FoodList[index].foods[id].__v, this.FoodList[index].foods[id].name, this.FoodList[index].foods[id].specfoods[0].price, false)
+            },
+            /** 将scroll的高度设置为innerHTML的高度  **/
+            setScrllHeight(){
+              let height = window.innerHeight
+              let width = window.innerWidth
+              let rem = width / 20.0
+              let scrollHeight = height - 2.5*rem - 7 * rem - 46
+              this.$refs.left_scroll.$refs.wrapper.style.height = scrollHeight + 'px' 
+              this.$refs.right_scroll.$refs.wrapper.style.height = scrollHeight + 'px' 
             }
+            
         },
         mounted() {
          this.$refs.left_scroll.refresh()
+         this.setScrllHeight()
         },
         
     }
 </script>
 
 <style scoped>
+    .fade-choose-enter-active,
+    .fade-choose-leave-active {
+        transition: opacity 3s;
+    }
+    
+    .fade-choose-leave,
+    .fade-choose-leave-active {
+        display: none;
+    }
+    
+    .fade-choose-enter,
+    .fade-choose-leave-active {
+        opacity: 0;
+    }
     #left_Scroll,
     #right_Scroll {
-      height:calc(100vh - 19vh - 8.5vh - 46px);
       overflow: hidden;
     }
     
     .FoodList {
         position: relative;
-        height: 100%;
         background-color: #f5f5f5;
     }
     
     .left {
         position: relative;
-        width: 13vh;
+        width:5rem ;
         overflow: hidden;
     }
     
@@ -169,12 +192,12 @@
     }
     
     .foodtitleitem {
-        width: 13vh;
+        width: 5rem;
         padding-top: 2.4vh;
         padding-bottom: 2.4vh;
         padding-left: 1.4vh;
         color: #666;
-        font-size: .8rem;
+        font-size: .75rem;
         border-bottom: .025rem solid #e4e4e4;
     }
     
@@ -194,10 +217,10 @@
     
     .right {
         position: absolute;
-        width: calc(100% - 13vh);
+        width: calc(100% - 5rem);
         height: 100%;
         top: 0;
-        left: 13vh;
+        left: 5rem;
         overflow: hidden;
     }
     
@@ -210,7 +233,7 @@
     .Itemname {
         font-size: 1rem;
         color: #666;
-        font-weight: 550;
+        font-weight: 700;
     }
     
     .ItemDesc {
@@ -221,7 +244,7 @@
     
     .foodItem {
         position: relative;
-        padding: 2.5vh 0;
+        padding: 2vh 0;
         background-color: #fff;
         border-bottom: .015rem solid #e4e4e4;
         overflow: hidden;
@@ -244,19 +267,19 @@
     }
     
     .foodNmae {
-        font-size: .9rem;
-        font-weight: 550;
+        font-size: .85rem;
+        font-weight: 700;
     }
     
     .foodDesc {
         margin-top: .3rem;
-        font-size: .65rem;
+        font-size: .6rem;
         color: #999;
     }
     
     .foodSell {
         margin-top: .3rem;
-        font-size: .7rem;
+        font-size: .65rem;
         color: #333;
     }
     
@@ -264,7 +287,7 @@
         position: relative;
         display: inline-block;
         left: -.2rem;
-        font-size: .6rem;
+        font-size: .55rem;
         padding: .05rem .15rem;
         border: .045rem solid #F1884F;
         border-radius: .55rem;
@@ -288,7 +311,7 @@
     .singal {
         position: relative;
         left: -.5rem;
-        font-weight: 550;
+        font-weight: 700;
         color: #FF6600;
     }
     
@@ -322,18 +345,5 @@
         margin: 0 .3rem;
         top: -5px;
     }
-    .fade-choose-enter-active,
-    .fade-choose-leave-active {
-        transition: opacity 3s;
-    }
-    
-    .fade-choose-leave,
-    .fade-choose-leave-active {
-        display: none;
-    }
-    
-    .fade-choose-enter,
-    .fade-choose-leave-active {
-        opacity: 0;
-    }
+
 </style>

@@ -1,7 +1,7 @@
 <!-- 组件说明 -->
 <template>
   <div class='tabcontrol'>
-    <div class='tabcontrolitem' v-for='(item,index) in title' @click='divClick(index)' :class='{active:current==index}'>
+    <div class='tabcontrolitem'  v-for='(item,index) in title' :key='index' @click='divClick(index)' :class='{active:current==index}'>
       <span>{{item}}</span>
     </div>
   </div>
@@ -42,10 +42,10 @@
 <style scoped>
     .tabcontrol {
         display: flex;
-        height: 8.5vh;
-        line-height: 8.5vh;
+        height: 2.5rem;
+        line-height:2.4rem;
         text-align: center;
-        font-size: .9rem;
+        font-size: .8rem;
         color: #666;
         background-color: #fff;
     }

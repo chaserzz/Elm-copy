@@ -1,8 +1,8 @@
 <!-- 组件说明 -->
 <template>
   <div class='profile'>
-		<profile-nav-bar />
-		<user-info />
+		<profile-nav-bar  />
+		<user-info @click.native='GoRegister' />
 		 <!--2.没有单独封装: 不同的地方太多, 需要传过多的参数-->
 		 <section class="account">
       <div class="account-item">
@@ -77,6 +77,11 @@
             },
             serviceListClick(index) {
 
+            },
+            GoRegister(){
+              this.$router.push({
+                path:'/register'
+              })
             }
         },
     }

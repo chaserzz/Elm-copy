@@ -74,7 +74,7 @@
 <style scoped>
     .shopDesc {
         position: relative;
-        height: 19vh;
+        height: 7rem;
         overflow: hidden;
     }
     
@@ -96,7 +96,7 @@
     .shop_desc {
         position: relative;
         width: 100%;
-        height: 19vh;
+        height: 7rem;
         z-index: 9;
         background-color: rgba(195, 185, 198, .85);
         color: #fff;
@@ -133,7 +133,7 @@
     .shopName {
         top: .6rem;
         font-size: 1.1rem;
-        font-weight: 550;
+        font-weight: 700;
     }
     
     .deliver {

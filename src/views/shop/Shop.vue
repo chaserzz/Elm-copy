@@ -2,13 +2,13 @@
     这是店铺页面
 -->
 <template>
-  <div class='Shop' >
+  <div class='Shop' ref='shop'>
     <shop-nav-bar class='navBar'/>
-    <shop-desc :info = 'shopInfo' @showActive = 'showActive'/>
+    <shop-desc class='shopDesc' :info = 'shopInfo' @showActive = 'showActive'/>
     <tab-control class='tabControl' :title='["商品","评价"]' @tabClick = 'tabClick'/>
     <div class='shopContent'>
 			<section class='Goods'  v-show='currentIndex === 0'>
-				<shop-food-list class='foodList'   :finish-load='FoodLoadFinish' :food-list='FoodList' @changeCart = 'changeCart'/>
+				<shop-food-list class='foodList' :finish-load='FoodLoadFinish' :food-list='FoodList' @changeCart = 'changeCart'/>
 		    	<section class='shopcart'>
                 	<shop-cart  
 			    	:cart-data='CurrtentCartData' 
@@ -16,7 +16,7 @@
 		    		:mini-order-fee ='shopInfo.float_minimum_order_amount' 
 		    		:deliver-fee = 'shopInfo.float_delivery_fee'
 	    			/>
-                </section>
+          </section>
 			</section>
 			<section class='comments' v-if='currentIndex != 0'>
 				<scroll 
@@ -207,47 +207,50 @@
                         this.$refs.scroll.finishPullUp()
                     this.$refs.scroll.refresh()
                 })
+            },
+            setShopHeight(){
+             let height = window.innerHeight
+             this.$refs.shop.style.height=height + 'px'
             }
         },
         mounted() {
             this.getShopInfo()
+            this.setShopHeight()
         },
     }
 </script>
 
 <style scoped>
-    .Shop {
-        height: 100vh;
-        background-color: #f5f5f5;
-        overflow: hidden;
-    }
+/* 整个页面 */
+  .Shop{
+    position: absolute;
+    top:0;
+    left:0;
+    overflow: hidden;
+  }
+/* 商品导航栏  */
+  .navBar{
+    position: relative;
+    z-index: 99;
+  }
+  /* 商店简介 */
+  .shopDesc{
+    position: absolute;
+    width: 100%;
+    top:0;
+  }
+  /* 切换栏 */
+  .tabControl{
+    margin-top:calc(7rem - 42px);
+  }
+  /* 商店详细内容 */
+  .shopContent{
+    position: relative;
+    width: 100vw;
+  }
+  /**评论滚动 */
     #Scroll {
         height: calc(100vh - 19vh);
         overflow: hidden;
-    }
-    .navBar {
-        position: absolute;
-        left: -.8rem;
-        z-index: 100;
-    }
-
-    .tabControl {
-        border-bottom: .025rem solid #e4e4e4;
-    }
-
-    .shopcart{
-    position: relative;
-    }
-    .shopContent{
-    position: relative;
-    height:calc(100vh - 19vh - 8.5vh);
-    }
-    .Goods{
-        height: 100%;
-    }
-    .shopcart{
-        position: absolute;
-        bottom: 0;
-        width: 100%;
     }
 </style>

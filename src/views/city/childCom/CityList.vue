@@ -70,7 +70,7 @@
         float: left;
         overflow: hidden;
         text-overflow: ellipsis;
-        width: 25%;
+        width: 24.5%;
         height: 1.9rem;
         line-height: 1.9rem;
         font: .75rem/1.9rem Microsoft YaHei;

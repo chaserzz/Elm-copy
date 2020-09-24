@@ -1,15 +1,18 @@
 <template>
   <div class='register'>
       <register-nav-bar />
+      <register-input />
   </div>
 </template>
 
 <script>
 import RegisterNavBar from './childCom/RegisterNavBar'
+import RegisterInput from './childCom/RegisterInput'
 export default {
   name: 'Register',
   components:{
-   RegisterNavBar
+   RegisterNavBar,
+   RegisterInput
   },
   data () {
    

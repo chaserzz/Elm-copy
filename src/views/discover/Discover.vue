@@ -10,7 +10,7 @@
         <div v-if='Historymodel && historySearch[0]' class='title'>
             搜索历史
         </div>
-        <div  v-if='!Historymodel' class='title'>
+        <div  v-if='!Historymodel && !IsreasulteNull' class='title'>
             商家
         </div>
     </div>
@@ -18,7 +18,7 @@
         <!-- 历史记录-->
         <div v-if='Historymodel '>
             <ul>
-                <li v-for='(item,index) in historySearch' class='historyItem'>
+                <li v-for='(item,index) in historySearch' class='historyItem' :key='index'>
                     <span>{{item}}</span>
                     <svg @click='deleteItem(index)' t="1595044747529" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3374" width="11" height="11"><path d="M671.830688 511.699001l319.059377-319.059377c43.945914-43.945914 43.945914-115.583774 0-159.529688-43.945914-43.945914-115.583774-43.945914-159.529688 0l-319.059377 319.059377-319.059377-319.059377c-43.945914-43.945914-115.583774-43.945914-159.529688 0-43.945914 43.945914-43.945914 115.583774 0 159.529688l319.059377 319.059377-319.059377 319.059377c-43.945914 43.945914-43.945914 115.583774 0 159.529688 43.945914 43.945914 115.583774 43.945914 159.529688 0l319.059377-319.059377 319.059377 319.059377c43.945914 43.945914 115.583774 43.945914 159.529688 0 43.945914-43.945914 43.945914-115.583774 0-159.529688L671.830688 511.699001z" p-id="3375" fill="#999999"></path></svg>
                 </li>
@@ -34,7 +34,7 @@
         <!--搜索到数据-->
         <div v-if='!IsreasulteNull && !Historymodel ' class='resulte'>
            <ul>
-               <li v-for='(item,index) in searchResulte' >
+               <li v-for='(item,index) in searchResulte' :key='index' >
                 <img :src="item.image_path" alt="">
                 <p class='first'>
                     <span class='name'>{{item.name}}</span>
@@ -109,12 +109,10 @@
                             item.image_path = 'https://elm.cangdu.org/img/' + item.image_path
                         }
                         this.searchResulte = res
-                        console.log(res);
                     } else {
                         this.IsreasulteNull = true
                     }
                 }).then(() => {
-                    if (this.IsreasulteNull) return;
                     let repite = false
                     for (let item of this.historySearch) {
                         if (this.keyword === item) {
@@ -169,14 +167,15 @@
     }
     
     .search {
+        position: relative;
         padding: 0.55rem 0.15rem;
-        height: 3rem;
+        height: 2.2rem;
         background-color: #fff;
     }
     
     .search input {
-        width: 73%;
-        height: 100%;
+        width: 72%;
+        height: 50%;
         margin-left: 2%;
         border: 0.035rem solid #e4e4e4;
         border-radius: 0.15rem;
@@ -189,9 +188,11 @@
     
     .search button {
         display: inline-block;
-        width: 22%;
+        position: absolute;
+        width: 18%;
+        height: 63.5%;
+        right: 2%;
         margin-left: 2%;
-        height: 100%;
         background-color: rgb(49, 144, 232);
         color: #fff;
         font-size: 0.8rem;

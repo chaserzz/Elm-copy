@@ -34,7 +34,7 @@
 
 <script>
   import alertTip from 'components/common/alter/alertTip'
-  import {getcaptchas,sendLogin} from 'network/register'
+  import {getcaptchas,sendLogin,UserInfo} from 'network/register'
   export default {
     name: 'RegisterInput',
     components:{
@@ -49,7 +49,8 @@
         userPassword:null,  //用户密码
         CodeNum:null,   //验证码
         showAlert:false, //是否显示警告
-        alertText:''  //警告内容
+        alertText:'',  //警告内容
+        userInfo:null
       }
     },
     computed:{
@@ -66,7 +67,7 @@
         }
       },
       //获得验证码图片
-     async _getcaptchasImg(){
+      _getcaptchasImg(){
         getcaptchas().then(res=>{
           this.captchasImg = res.code
        })
@@ -79,13 +80,15 @@
       tryLogin(){
         //未输入姓名
         if(this.userId =='' || this.userId === null){
-            this.alertText='未输入账号'
+            this.showAlert = true
+            this.alertText='请输入账号'
         }else if/*未输入密码*/(this.userPassword == '' || this.userPassword === null){
-            this.alertText='未输入密码'
+            this.showAlert = true
+            this.alertText='请输入密码'
         }else if/*未输入验证码*/(this.CodeNum == '' || this.userPassword === null){
-            this.alertText='未输入验证码' 
+            this.showAlert = true
+            this.alertText='请输入验证码' 
         }else{
-          //开始登录验证
           sendLogin(this.userId,this.userPassword,this.CodeNum).then(res =>{
           console.log(res);
           if(res.message == '验证码失效'){
@@ -93,7 +96,7 @@
           }
         })
         }
-      },
+    },
       //关闭提示
       closeTip(){
         this.showAlert = false

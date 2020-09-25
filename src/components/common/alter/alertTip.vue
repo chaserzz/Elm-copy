@@ -51,13 +51,13 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        margin-top: -6rem;
-        margin-left: -6rem;
-        width: 12rem;
+        margin-top: -8rem;
+        margin-left: -8rem;
+        width: 16rem;
         animation: tipMove .4s ;
         background-color: rgba(255,255,255,1);
         border: 1px;
-        padding-top: .6rem;
+        padding-top: .7rem;
         display: flex;
         justify-content: center;
         align-items: center;

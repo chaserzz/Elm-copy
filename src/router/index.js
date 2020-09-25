@@ -20,6 +20,8 @@ const Medium = () =>
     import ("views/medium/Medium")
 const Register = () =>
     import ("views/register/Register")
+const confirmOrder = () =>
+    import ("views/confirmOrder/confirmOrder")
 Vue.use(VueRouter)
 
 const routes = [{
@@ -75,6 +77,14 @@ const routes = [{
         path: '/register',
         name: 'Register',
         component: Register
+    },
+    {
+        path: '/confirmOrder/:geohash/:shopId',
+        name: 'confirmOrder',
+        component: confirmOrder,
+        children: [
+
+        ]
     }
 ]
 

@@ -10,7 +10,10 @@
 			<section class='Goods'  v-show='currentIndex === 0'>
 				<shop-food-list class='foodList' :finish-load='FoodLoadFinish' :food-list='FoodList' @changeCart = 'changeCart'/>
 		    	<section class='shopcart'>
-                	<shop-cart  
+                	<shop-cart 
+                  @goPay='goConfirm' 
+                  @changeCart='changeCart'
+                  @clear='clearCart'
 			    	:cart-data='CurrtentCartData' 
 		    		:receive='receiveInCart' 
 		    		:mini-order-fee ='shopInfo.float_minimum_order_amount' 
@@ -151,8 +154,15 @@
             },
             //改变购物车中的数量
             changeCart(index, id, num, name, price, isAdd) {
+              this.FoodList[index].foods[id].__v = num
                 if (isAdd) this.receiveInCart = true
+                let findItem = false
                 this.CartList = JSON.parse(getStore('CartList')) || []
+                 if(this.CartList.length ===1){
+                   if(this.CartList[0].num === 0){
+                    this.CartList =[]
+                    }
+                }
                 let CartItem = {
                     shopId: this.shopId,
                     foodListIndex: index,
@@ -166,21 +176,35 @@
                     this.CartList.push(CartItem)
                 } else {
                     for (let i = 0; i < this.CartList.length; i++) {
-                        if (this.CartList[i].shopId == this.shopId && this.CartList[i].foodListIndex == index && this.CartList[i].foodsIndex == id) {
+                        if (this.CartList[i].shopId === this.shopId && this.CartList[i].foodListIndex === index && this.CartList[i].foodsIndex === id) {
                             this.CartList[i].num = num
-                        } else {
-                            this.CartList.push(CartItem)
+                            findItem = true
+                            break
                         }
                         if (this.CartList[i].num === 0) {
                             this.CartList.splice(i, 1)
                         }
                     }
+                    if(!findItem)
+                     this.CartList.push(CartItem)
                 }
                 this.getCartData()
                 setTimeout(() => {
                     this.receiveInCart = false
                 }, 500)
                 setStore('CartList', this.CartList)
+
+            },
+            /**清空购物车 */
+            clearCart(){
+              this.CurrtentCartData =[]
+              for(let i = 0;i<this.CartList.length;i++){
+                if(this.CartList[i].shopId === this.shopId){
+                  this.CartList.splice(i,1)
+                }
+              }
+              removeStore('CartList')
+              setStore('CartList', this.CartList)
             },
             getCartData() {
                 let cartlist = []
@@ -208,15 +232,26 @@
                     this.$refs.scroll.refresh()
                 })
             },
+            //修复安卓手机100vh中包含地址栏高度
             setShopHeight(){
              let height = window.innerHeight
              this.$refs.shop.style.height=height + 'px'
+            },
+            //前往结算页面
+            goConfirm(){
+              let geohash = getStore('geohash')
+              this.$router.push({
+                path:'/confirmOrder/'+geohash+'/'+this.shopId
+              })
             }
         },
         mounted() {
             this.getShopInfo()
             this.setShopHeight()
         },
+        watch:{
+
+        }
     }
 </script>
 

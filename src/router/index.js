@@ -22,6 +22,9 @@ const Register = () =>
     import ("views/register/Register")
 const confirmOrder = () =>
     import ("views/confirmOrder/confirmOrder")
+const Remark = () =>
+    import ('views/remark/Remark')
+
 Vue.use(VueRouter)
 
 const routes = [{
@@ -85,6 +88,11 @@ const routes = [{
         children: [
 
         ]
+    },
+    {
+        path: '/remark',
+        name: Remark,
+        component: Remark
     }
 ]
 

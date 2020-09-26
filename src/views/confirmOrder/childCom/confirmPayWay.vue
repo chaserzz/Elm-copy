@@ -65,8 +65,8 @@ export default {
 }
 .redPocket{
   display: flex;
-  min-height: 2rem;
-  line-height: 2rem;
+  height: 2rem;
+  line-height: 2.8rem;
   justify-content:space-between;
   color:#aaa;
   font-size: .8rem;

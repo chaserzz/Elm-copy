@@ -1,12 +1,12 @@
 import axios from 'axios'
 axios.defaults.withCredentials = true
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+
 export function request(options) {
     return new Promise((resolve, reject) => {
         // 1.创建axios的实例对象
         const instance = axios.create({
-            baseURL: 'http://elm.cangdu.org',
-            timeout: 9000,
+            baseURL: 'https://elm.cangdu.org',
+            timeout: 9000000,
         })
         instance.interceptors.response.use(res => {
             return res.data

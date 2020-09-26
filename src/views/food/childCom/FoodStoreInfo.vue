@@ -8,34 +8,34 @@
 </template>
 
 <script>
-    import StoreList from 'components/content/store/StoreList'
-    import StoreListItem from 'components/content/store/StoreListItem'
+  import StoreList from 'components/content/store/StoreList'
+  import StoreListItem from 'components/content/store/StoreListItem'
 
-    export default {
-        name: 'FoodStoreInfo',
-        props: {
-            storeInfo: {
-                type: Array,
-                default () {
-                    return []
-                }
-            }
-        },
-        components: {
-            StoreList
-        },
-        data() {
-            return {
+  export default {
+    name: 'FoodStoreInfo',
+    props: {
+      storeInfo: {
+        type: Array,
+        default () {
+          return []
+        }
+      }
+    },
+    components: {
+      StoreList
+    },
+    data() {
+      return {
 
-            };
-        },
-        computed: {
+      };
+    },
+    computed: {
 
-        },
-        methods: {
+    },
+    methods: {
 
-        },
-    }
+    },
+  }
 </script>
 
 <style scoped>

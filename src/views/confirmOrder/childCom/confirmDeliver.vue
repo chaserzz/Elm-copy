@@ -2,7 +2,7 @@
   <div class='deliver_model'>
     <p class='deliver_text'>送达时间</p>
     <section class='deliver_time'>
-      <p class='time'>尽快送达 | 预计 21:42</p>
+      <p class='time'>尽快送达 | 预计 {{deliverTime}}</p>
       <p class='model'>蜂鸟专送</p>
     </section>
   </div>
@@ -11,15 +11,33 @@
 <script>
   export default {
     name: 'confirmDeliver',
-    components: {
-
+    props:{
+      time:{
+        type:Number,
+        default:30
+      }
     },
     data() {
 
       return {}
     },
-    computed: {},
-    methods: {}
+    computed: {
+      deliverTime(){
+        let date = new Date()
+        //获得当前的分钟
+        var min=date.getMinutes();
+        date.setMinutes(min+this.time);
+        let newdate=date.toLocaleString('chinese', { hour12: false }); 
+        let HMS = newdate.substring(10,15)
+        return HMS
+      }
+    },
+    methods: {
+
+    },
+    mounted(){
+
+    }
   }
 </script>
 

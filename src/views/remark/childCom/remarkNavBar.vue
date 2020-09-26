@@ -1,3 +1,4 @@
+<!-- 组件说明 -->
 <template>
   <div>
     <nav-bar class='navBar'>
@@ -9,7 +10,7 @@
         </svg>
       </div>
       <div class='center' slot="center">
-        <span>密码登录</span>
+        <span>订单备注</span>
       </div>
       <div class='right' slot="right"></div>
     </nav-bar>
@@ -19,20 +20,23 @@
 <script>
   import NavBar from 'components/content/navbar/NavBar'
   export default {
-    name: 'RegisterNavBar',
+    name: 'remarkNavBar',
     components: {
       NavBar
     },
     data() {
+      return {
 
-      return {}
+      };
     },
-    computed: {},
+    computed: {
+
+    },
     methods: {
-      goBack() {
+      goBack(){
         this.$router.go(-1)
       }
-    }
+    },
   }
 </script>
 

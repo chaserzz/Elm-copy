@@ -141,7 +141,6 @@
       //加号点击事件
       addToCart(item) {
         item.num++
-        console.log(item)
         this.$emit('changeCart', item.foodListIndex, item.foodsIndex, item.num, item.name, item.price, true)
       },
       //减号点击事件
@@ -160,15 +159,15 @@
         this.showDetail = false
       },
       //前往结算页面
-      goConfirm(){
-        if(!this.goPay){
+      goConfirm() {
+        if (!this.goPay) {
           return
-        }else{
+        } else {
           this.$emit('goPay')
+        }
       }
     }
   }
-}
 </script>
 
 <style scoped>
@@ -464,10 +463,12 @@
     transform: translate(0, -50%);
     color: #666;
   }
-  .num{
+
+  .num {
     position: relative;
     bottom: 0.225rem;
   }
+
   .block {
     position: relative;
     height: 100vh;

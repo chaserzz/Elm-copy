@@ -33,5 +33,8 @@
 </script>
 
 <style scoped>
-
+svg{
+  position: relative;
+  left:-0.72rem;
+}
 </style>

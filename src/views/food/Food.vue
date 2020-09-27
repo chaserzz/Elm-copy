@@ -21,6 +21,7 @@
   import {
     getCategoryList,
     getStoreInfo,
+    FirstIn
   } from 'network/food'
 
   export default {
@@ -33,7 +34,7 @@
     },
     data() {
       return {
-        currentId: 0,
+        currentId: 20,
         categoryList: [],
         foodTitle: '',
         latitude: '',
@@ -49,13 +50,19 @@
     methods: {
       getParams() {
         this.currentId = this.$route.params.id
+        this.currentId = this.currentId - 0
         this.foodTitle = this.$route.params.name
         this.latitude = this.$route.params.latitude
         this.longitude = this.$route.params.longitude
       },
       Change(item) {
-        this.currentId = item.id
+        if(this.currentId !== item.id){
+          this.storePage = 0
+          this.storeInfo = []
+        }
+        this.currentId = item.id 
         this.foodTitle = item.name
+        this._getStoreInfo()
       },
       order(id) {
         this.orderId = id
@@ -63,46 +70,58 @@
         this.$refs.categoryList.sortItem('order')
       },
       _getStoreInfo() {
-        getStoreInfo(this.latitude, this.longitude, this.page * 20, this.currentId, this.orderId).then(res => {
-          let list = []
+        getStoreInfo(this.latitude, this.longitude,this.storePage * 20 , this.currentId, this.orderId).then(res => {
+         let list = []
           for (let item of res) {
             item.image_path = 'https://elm.cangdu.org/img/' + item.image_path
             item.startWidth = {
               width: (item.rating / 5.0) * 3.0 + 'rem'
             }
-            list.push(item)
+            this.storeInfo.push(item)
           }
-          this.storeInfo = list
           this.storePage++;
         })
       },
       lodaData() {
         this._getStoreInfo()
+        
+        this.$refs.scroll.refresh()
       }
     },
     created() {
       this.getParams()
       getCategoryList().then(res => {
-        for (const item of res) {
+        console.log(res);
+        for (let item of res) {
           if (item.image_url) {
             item.image_url = 'https://fuss10.elemecdn.com/' + item.image_url
           } else {
             item.image_url = 'https://elm.cangdu.org/img/default.jpg'
           }
-          if (!item.sub_categories) {
-
-          }
         }
         this.categoryList = res
       })
     },
-    beforeMount() {
-      this._getStoreInfo()
-    },
+    mounted(){
+      getStoreInfo(this.latitude,this.longitude).then(res =>{
+        let list = []
+        for (let item of res) {
+          item.image_path = 'https://elm.cangdu.org/img/' + item.image_path
+          item.startWidth = {
+          width: (item.rating / 5.0) * 3.0 + 'rem'
+        }
+          this.storeInfo.push(item)
+        }
+        this.storePage++
+      })
+    }
   }
 </script>
 
 <style scoped>
+.food{
+  overflow: hidden;
+}
   #Scroll {
     height: calc(100vh - 42px - 6vh);
   }

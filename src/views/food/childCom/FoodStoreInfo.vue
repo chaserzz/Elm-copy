@@ -2,7 +2,6 @@
 <template>
   <div class='storeInfo'>
     <store-list :store-list='storeInfo'>
-
     </store-list>
   </div>
 </template>

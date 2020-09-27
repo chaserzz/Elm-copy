@@ -126,7 +126,7 @@
   .city {
     position: relative;
     height: 100vh;
-    height: calc(var(--vh, 1vh) * 100 - 46px);
+    height:100vh;
     z-index: 99;
     background-color: #fff;
     overflow: hidden;

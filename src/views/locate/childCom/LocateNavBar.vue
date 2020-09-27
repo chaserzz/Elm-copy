@@ -55,6 +55,7 @@
 
   .right {
     width: 70px !important;
+    font-size: .8rem;
     line-height: 42px;
     transform: translateX(-1.7rem);
   }

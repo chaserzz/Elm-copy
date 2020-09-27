@@ -46,3 +46,7 @@ textarea {
     border: none;
     outline: none;
 }
+
+body {
+    background-color: #f5f5f5;
+}

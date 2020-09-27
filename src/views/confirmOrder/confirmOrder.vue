@@ -1,16 +1,15 @@
 <template>
   <div class='confirmOrder'>
     <confirm-order-nav-bar />
-    <confirm-address />
-    <confirm-deliver :time='deliverTime' />
-    <confirm-pay-way />
-    <confirm-info 
-    :food-list='cartList'
-    :deliver-fee='deliverFee'
-    :box-fee='boxFee'
-    :shop-info='shopInfo' 
-    />
-    <confirm-remark-info :remark-info='remarkInfo'/>
+    <scroll class='content' ref='scroll' :probe-type='3'>
+      <confirm-address />
+      <confirm-deliver :time='deliverTime' />
+      <confirm-pay-way />
+      <confirm-info :food-list='cartList' :deliver-fee='deliverFee' :box-fee='boxFee' :shop-info='shopInfo' />
+      <confirm-remark-info :remark-info='remarkInfo' />
+      <div class='block'></div>
+    </scroll>
+    <confirm-bottom-bar class='bottomBar' />
   </div>
 </template>
 
@@ -21,6 +20,7 @@
   import confirmPayWay from './childCom/confirmPayWay'
   import confirmInfo from './childCom/confirmInfo'
   import confirmRemarkInfo from './childCom/confirmRemarkInfo.vue'
+  import confirmBottomBar  from './childCom/confirmBottomBar.vue'
 
   import {
     getShopInfo,
@@ -33,7 +33,7 @@
     removeStore,
     getSectionStore
   } from 'common/utils.js'
-
+  import scroll from 'components/common/scroll/scroll'
 
   export default {
     name: 'confirmOrder',
@@ -43,7 +43,9 @@
       confirmDeliver,
       confirmPayWay,
       confirmInfo,
-      confirmRemarkInfo
+      confirmRemarkInfo,
+      scroll,
+      confirmBottomBar
     },
     data() {
 
@@ -51,11 +53,11 @@
         geohash: '', //经纬度
         shopId: 0, //商店ID
         shopInfo: null, //商店信息
-        deliverTime:0, //送达时间
-        boxFee:0, //餐盒费
-        deliverFee:0,//配送费
-        cartList:[], // 购物车
-        remarkInfo:null
+        deliverTime: 0, //送达时间
+        boxFee: 0, //餐盒费
+        deliverFee: 0, //配送费
+        cartList: [], // 购物车
+        remarkInfo: '口味,偏好等 '
       }
     },
     computed: {
@@ -67,7 +69,7 @@
         getShopInfo(shopId).then(res => {
           res.image_path = 'https://elm.cangdu.org/img/' + res.image_path
           this.shopInfo = res
-          this.deliverFee =res.float_delivery_fee
+          this.deliverFee = res.float_delivery_fee
         })
       },
       //获取本地存储和路由的数据
@@ -95,24 +97,25 @@
           }
         }
         //发送到购物车接口
-        checkOut(this.geohash,[newArr],this.shopId).then(res =>{
-          this.boxFee = 377 * newArr.length -100
-          this.deliverTime = 13 * newArr.length 
-          if(this.deliverTime < 40) this.deliverTime = 40
+        checkOut(this.geohash, [newArr], this.shopId).then(res => {
+          this.boxFee = 377 * newArr.length - 100
+          this.deliverTime = 13 * newArr.length
+          if (this.deliverTime < 40) this.deliverTime = 40
         })
-      //获得备注信息
-      let obj =JSON.parse(getSectionStore('clientRemarks'))
-      let remarkinfo = ''
-      remarkinfo += obj.other
-      if(obj.quick){
-      for(const item of obj.quick){
-        
-        remarkinfo += item +","
-       }
-      }else{
-        remarkinfo ='口味,偏好等 '
-      }
-      this.remarkInfo = remarkinfo
+        //获得备注信息
+        let obj = JSON.parse(getSectionStore('clientRemarks'))
+        if (obj.quick) {
+          for (const item of obj.qucik) {
+            this.remarkInfo = ''
+            this.remarkInfo += item
+          }
+        } else if (obj.other) {
+          if (this.remarkInfo == '口味,偏好等 ') {
+            this.remarkInfo = obj.other
+          } else {
+            this.remarkInfo += obj.other
+          }
+        }
       }
     },
     beforeMount() {
@@ -125,8 +128,27 @@
 
 <style scoped>
   .confirmOrder {
+    position: relative;
     width: 100%;
+    height: 100vh;
     overflow: hidden;
     background-color: #f5f5f5;
+  }
+
+  .content {
+    position: absolute;
+    top: 44px;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+  }
+  .block{
+    width: 10px;
+    height: 1.5rem;
+  }
+  .bottomBar{
+    position: absolute;
+    width: 100%;
+  
   }
 </style>

@@ -1,16 +1,16 @@
 <!-- 组件说明 -->
 <template>
-  <div class=''>
-    Order
+  <div class='order'>
+    <order-nav-bar />
   </div>
 </template>
 
 <script>
-    //import x from ''
+    import orderNavBar from './childCom/orderNavBar'
     export default {
         name: 'Order',
         components: {
-
+          orderNavBar
         },
         data() {
             return {
@@ -27,5 +27,7 @@
 </script>
 
 <style scoped>
-
+.order{
+  overflow: hidden;
+}
 </style>

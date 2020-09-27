@@ -168,7 +168,7 @@
     </transition>
     <!--动画过渡标签-->
     <!--筛选-->
-
+    <transition name="showlist">
     <section v-show='sortBy == "divide"' class='sort_content divide'>
       <header>
         <span>配送方式</span>
@@ -294,7 +294,7 @@
   .sort_item {
     display: inline-block;
     height: 100%;
-    width: 33.3%;
+    width: 33%;
     text-align: center;
     color: #333;
     font-size: .7rem;
@@ -404,7 +404,8 @@
 
   .detail_count {
     position: absolute;
-    right: 0;
+    text-align: end;
+    right: .7rem;
   }
 
   .detail_active {

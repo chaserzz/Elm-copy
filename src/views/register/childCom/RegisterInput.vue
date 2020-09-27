@@ -49,7 +49,7 @@
   import {
     getcaptchas,
     sendLogin,
-    UserInfo
+    getUserInfo
   } from 'network/register'
   export default {
     name: 'RegisterInput',
@@ -119,6 +119,9 @@
     },
     created() {
       this._getcaptchasImg()
+      getUserInfo().then(res =>{
+        console.log(res);
+      })
     }
   }
 </script>

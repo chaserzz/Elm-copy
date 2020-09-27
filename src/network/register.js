@@ -1,14 +1,16 @@
 import { request } from './network'
+import fetch from './fetch'
 
 //获得验证码图片
 export function getcaptchas() {
     return request({
+        url: '/v1/captchas',
         method: 'post',
-        url: '/v1/captchas'
     })
 }
+
 //User
-export function UserInfo(user_id) {
+export function getUserInfo(user_id) {
     return request({
         url: '/v1/user',
         params: {
@@ -19,10 +21,9 @@ export function UserInfo(user_id) {
 //进行登录
 export function sendLogin(username, password, captcha_code) {
     return request({
-        method: 'post',
-        url: '/v2/login',
-
-        params: {
+        method: 'POST',
+        url: '/v2/login/',
+        query: {
             username,
             password,
             captcha_code

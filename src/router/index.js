@@ -24,7 +24,8 @@ const confirmOrder = () =>
     import ("views/confirmOrder/confirmOrder")
 const Remark = () =>
     import ('views/remark/Remark')
-
+const Invoice = () =>
+    import ('views/invoice/Invoice')
 Vue.use(VueRouter)
 
 const routes = [{
@@ -66,33 +67,35 @@ const routes = [{
             },
         ]
     },
-    {
+    { //商店选择
         path: '/food/:longitude/:latitude/:name/:id',
         name: 'Food',
         component: Food
     },
-    {
+    { //商店
         path: '/shop/:shopid',
         name: 'Shop',
         component: Shop,
     },
-    {
+    { //注册
         path: '/register',
         name: 'Register',
         component: Register
     },
-    {
+    { //确认订单
         path: '/confirmOrder/:geohash/:shopId',
         name: 'confirmOrder',
         component: confirmOrder,
-        children: [
-
-        ]
     },
-    {
+    { //备注
         path: '/remark',
         name: Remark,
         component: Remark
+    },
+    { //发票
+        path: '/invoice',
+        component: Invoice,
+        name: 'Invoice'
     }
 ]
 

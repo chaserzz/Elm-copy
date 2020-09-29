@@ -33,7 +33,9 @@
 
     },
     methods: {
-
+      goBack(){
+        this.$router.go(-1)
+      }
     },
   }
 </script>
@@ -46,7 +48,7 @@
   .left {
     display: flex;
     margin-left: .1rem;
-    margin-top: .5rem;
+    margin-top: .7rem;
   }
 
   .center {

@@ -26,6 +26,8 @@ const Remark = () =>
     import ('views/remark/Remark')
 const Invoice = () =>
     import ('views/invoice/Invoice')
+const Pay = () =>
+    import ('views/pay/Pay')
 Vue.use(VueRouter)
 
 const routes = [{
@@ -96,6 +98,11 @@ const routes = [{
         path: '/invoice',
         component: Invoice,
         name: 'Invoice'
+    },
+    { //支付
+        path: '/pay',
+        component: Pay,
+        name: 'Pay'
     }
 ]
 

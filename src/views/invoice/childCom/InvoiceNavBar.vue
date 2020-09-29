@@ -52,7 +52,7 @@
       display: flex;
       top:.2rem;
       margin-left: .1rem;
-      margin-top:.5rem;
+      margin-top:.7rem;
     }
     
     .center {

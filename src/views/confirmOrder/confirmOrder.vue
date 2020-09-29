@@ -5,11 +5,15 @@
       <confirm-address />
       <confirm-deliver :time='deliverTime' />
       <confirm-pay-way />
-      <confirm-info :food-list='cartList' :deliver-fee='deliverFee' :box-fee='boxFee' :shop-info='shopInfo' />
+      <confirm-info 
+      :food-list='cartList' 
+      :deliver-fee='deliverFee' 
+      :box-fee='boxFee' 
+      :shop-info='shopInfo' />
       <confirm-remark-info :remark-info='remarkInfo' />
       <div class='block'></div>
     </scroll>
-    <confirm-bottom-bar class='bottomBar' />
+    <confirm-bottom-bar  class='bottomBar' />
   </div>
 </template>
 
@@ -57,7 +61,8 @@
         boxFee: 0, //餐盒费
         deliverFee: 0, //配送费
         cartList: [], // 购物车
-        remarkInfo: '口味,偏好等 '
+        remarkInfo: '口味,偏好等 ', //备注信息
+        totalPrice:0
       }
     },
     computed: {
@@ -104,19 +109,22 @@
         })
         //获得备注信息
         let obj = JSON.parse(getSectionStore('clientRemarks'))
-        if (obj.quick) {
-          for (const item of obj.qucik) {
-            this.remarkInfo = ''
-            this.remarkInfo += item
+        if (obj.quick.length>0) {
+          for (const item of obj.quick) {
+           if (this.remarkInfo == '口味,偏好等 ') {
+             this.remarkInfo = ''
+           } 
+            this.remarkInfo += item +','
           }
-        } else if (obj.other) {
+        } 
+        if (obj.other !='') {
           if (this.remarkInfo == '口味,偏好等 ') {
             this.remarkInfo = obj.other
           } else {
             this.remarkInfo += obj.other
           }
         }
-      }
+      },
     },
     beforeMount() {
       this.getData()

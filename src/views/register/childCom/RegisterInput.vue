@@ -49,7 +49,7 @@
   import {
     getcaptchas,
     sendLogin,
-    getUserInfo
+    getUserInfo,
   } from 'network/register'
   export default {
     name: 'RegisterInput',

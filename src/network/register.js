@@ -8,6 +8,19 @@ export function getcaptchas() {
         method: 'post',
     })
 }
+// //进行登录
+// export function sendLogin(username, password, captcha_code) {
+//     return request({
+//         method: 'POST',
+//         url: '/v2/login',
+//         query: {
+//             username,
+//             password,
+//             captcha_code
+//         }
+//     })
+// }
+
 
 //User
 export function getUserInfo(user_id) {
@@ -18,15 +31,8 @@ export function getUserInfo(user_id) {
         }
     })
 }
-//进行登录
-export function sendLogin(username, password, captcha_code) {
-    return request({
-        method: 'POST',
-        url: '/v2/login/',
-        query: {
-            username,
-            password,
-            captcha_code
-        }
-    })
-}
+
+/**
+ * 账号密码登录
+ */
+export const sendLogin = (username, password, captcha_code) => fetch('http://elm.cangdu.org/v2/login', { username, password, captcha_code }, 'POST');

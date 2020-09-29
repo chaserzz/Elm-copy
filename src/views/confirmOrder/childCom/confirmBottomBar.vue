@@ -2,16 +2,18 @@
   <div class='bottom_bar'>
     <section class='totalPrice'>
       <span>
-        待支付{{}}
+        待支付￥{{totalPrice}}
       </span>
     </section>
-    <section class='confirm'>
+    <section class='confirm' @click='goPay()'>
       <span>确认下单</span>
     </section>
   </div>
 </template>
 
 <script>
+import {getSectionStore} from 'common/utils'
+
 export default {
   name: 'confirmBottomBar',
   components:{
@@ -20,11 +22,18 @@ export default {
   data () {
    
     return {
+      totalPrice:0
     }
   },
-  computed:{
-  },
   methods:{
+   goPay(){
+     this.$router.push({
+       path:'/pay'
+     })
+   }
+  },
+  mounted(){
+    this.totalPrice = JSON.parse(getSectionStore('totalPrice'))
   }
 }
 </script>

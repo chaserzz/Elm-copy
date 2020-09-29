@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import{getSectionStore,removeSectionStore,setSectionStore} from 'common/utils'
+
 export default {
   name: 'confirmInfo',
   props:{
@@ -83,9 +85,12 @@ export default {
     totalPrice(){
       let sum = 0
       for (const iterator of this.foodList) {
-        sum += iterator.price
+        sum += iterator.price * iterator.num
       }
-      return sum + this.boxFee + this.deliverFee
+      sum = sum + this.boxFee + this.deliverFee
+      removeSectionStore('totalPrice')
+      setSectionStore('totalPrice',sum)
+      return sum
     }
   },
   methods:{

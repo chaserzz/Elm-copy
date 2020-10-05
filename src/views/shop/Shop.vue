@@ -4,7 +4,7 @@
 <template>
   <div class='Shop' ref='shop'>
     <shop-nav-bar class='navBar' />
-    <shop-desc class='shopDesc' :info='shopInfo' @showActive='showActive' />
+    <shop-desc class='shopDesc' :info='shopInfo' @showActive='activeClick' @goDetail='goDetail' />
     <tab-control class='tabControl' :title='["商品","评价"]' @tabClick='tabClick' />
     <div class='shopContent'>
       <section class='Goods' v-show='currentIndex === 0'>
@@ -22,6 +22,7 @@
         </scroll>
       </section>
     </div>
+    <shop-active v-if='showActive' :active='activeContent' @colseActive='colse'/>
   </div>
 </template>
 
@@ -31,6 +32,7 @@
   import ShopFoodList from './childCom/ShopFoodList.vue'
   import ShopCart from './childCom/ShopCart.vue'
   import ShopComment from './childCom/ShopComment.vue'
+  import ShopActive from './childCom/ShopActive'
 
   import tabControl from 'components/content/tabcontrol/tabcontrol'
 
@@ -58,24 +60,27 @@
       ShopFoodList,
       ShopCart,
       ShopComment,
+      ShopActive,
       scroll
     },
     data() {
       return {
-        shopId: 0,
-        shopInfo: [],
-        FoodList: [],
+        shopId: 0,  //商店id
+        shopInfo: [], //商店信息
+        FoodList: [], //商品信息
         receiveInCart: false,
         //购物车的内容
-        CartList: [],
-        currentIndex: 0,
-        commentsTags: [],
-        customerComments: [],
-        Comments: {},
-        tagName: '',
+        CartList: [],  //购物车
+        currentIndex: 0, //互斥
+        commentsTags: [], //评价标签
+        customerComments: [], //
+        Comments: {}, //评价
+        tagName: '',  //当前选择的tag名称
         page: 1, //顾客评论的当前页数,
         CurrtentCartData: [],  //当前商店的购物车
-        FoodLoadFinish: false
+        FoodLoadFinish: false, //加载完毕
+        showActive:false, //是否显示活动组件
+        activeContent:{},  //活动组件的内容
       };
     },
     computed: {
@@ -135,8 +140,12 @@
             this.Comments = res
           })
       },
-      showActive() {
+      //显示活动
+      activeClick() {
         this.showActive = true
+        this.activeContent.name = this.shopInfo.name
+        this.activeContent.active = this.shopInfo.activities
+        this.activeContent.promotion = this.shopInfo.promotion_info
       },
       //tab栏点击
       tabClick(index) {
@@ -252,6 +261,16 @@
         let geohash = getStore('geohash')
         this.$router.push({
           path: '/confirmOrder/' + geohash + '/' + this.shopId
+        })
+      },
+      //关闭活动组件
+      colse(){
+        this.showActive = false
+      },
+      //前往Detail页面
+      goDetail(){
+        this.$router.push({
+          path:'/shopDetail/' + this.shopId
         })
       }
     },

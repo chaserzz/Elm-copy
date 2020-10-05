@@ -1,7 +1,7 @@
 <!-- 组件说明 -->
 <template>
-  <div class='storeListItem' @click='GoShop(storeItem)'>
-    <img :src="storeItem.image_path" @load='imgload()'>
+  <div class='storeListItem' @click='GoShop(storeItem)'  @error="imgOnerror($event)" >
+    <img :src="storeItem.image_path" @load='imgload()' >
     <!--商店信息-->
     <section class='storeInfo'>
       <!--第一行: 包括商店名称,  保 准 票-->
@@ -75,7 +75,7 @@
     },
     data() {
       return {
-
+        defaultImg:'../../../assets/images/common/Load.jpg'
       };
     },
     methods: {
@@ -86,7 +86,13 @@
         this.$router.push({
           path: '/shop/' + storeItem.id
         })
-      }
+      },
+      //图片加载失败
+    imgOnerror(event) {
+      let img = event.srcElement
+      img.src = this.defaultImg
+      img.onerror = null // 防止闪图
+    },
     },
   }
 </script>

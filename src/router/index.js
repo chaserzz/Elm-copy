@@ -28,8 +28,11 @@ const Invoice = () =>
     import ('views/invoice/Invoice')
 const Pay = () =>
     import ('views/pay/Pay')
+const ShopDetail = () =>
+    import ('views/shopDetail/ShopDetail')
+const ShopSafe = () =>
+    import ('views/shopSafe/ShopSafe')
 Vue.use(VueRouter)
-
 const routes = [{
         path: '/',
         redirect: '/city'
@@ -78,6 +81,18 @@ const routes = [{
         path: '/shop/:shopid',
         name: 'Shop',
         component: Shop,
+    },
+    { //商店详情页面
+        path: '/shopDetail/:shopid',
+        name: 'ShopDetail',
+        component: ShopDetail,
+        children: []
+    },
+    {
+        //食品安全
+        path: '/shopSafe/:status',
+        name: 'ShopSafe',
+        component: ShopSafe,
     },
     { //注册
         path: '/register',

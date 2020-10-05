@@ -24,7 +24,7 @@
                 <li class='foodItem' v-for='(item,id) in item.foods' :key='id'>
                   <section>
                     <div class='foodImg'>
-                      <img :src="'https://elm.cangdu.org/img/' + item.image_path" alt="">
+                      <img :src="'https://elm.cangdu.org/img/' + item.image_path" @error="imgOnerror($event)" />
                     </div>
                     <div class='desc'>
                       <p class='foodNmae'>{{item.name}}</p>
@@ -142,7 +142,9 @@
         //存储FoodList的index
         index:0,
         //存储FoodList的id
-        id:0
+        id:0,
+        //失败图片路径
+        defaultImg:require('../../../assets/images/common/Load.jpg')
       };
     },
     methods: {
@@ -232,7 +234,13 @@
       //规格类减少
       spceSub(){
         this.$toast.show('规格类商品请在购物车内删除', 2000)
-      }
+      },
+      //图片加载失败
+      imgOnerror(event) {
+      let img = event.srcElement
+      img.src = this.defaultImg
+      img.onerror = null // 防止闪图
+    },
     },
     mounted() {
       this.$refs.left_scroll.refresh()

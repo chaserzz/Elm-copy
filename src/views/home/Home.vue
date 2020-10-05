@@ -4,7 +4,7 @@
     <home-nav-bar :location='location' />
     <scroll id='Scroll' ref='scroll' :pull-up-load='true' :probe-type='3' @pullingUp='lodaData'>
       <home-swiper :foodList1='foodPage1' :foodList2='foodPage2' :longitude='longitude' :latitude='latitude' />
-      <home-store-info v-show='FinishLoad' :storeInfo='storeInfo' />
+      <home-store-info v-if='FinishLoad' :storeInfo='storeInfo' />
     </scroll>
 
   </div>
@@ -58,7 +58,7 @@
         storeInfo: [],
         storePage: 0,
         //需要的商品数据全部加载完毕
-        FinishLoad: false
+        FinishLoad: false,
       };
     },
     computed: {
@@ -71,6 +71,7 @@
       _getStoreInfo() {
         //获取商店的信息
         getStoreInfo(this.latitude, this.longitude, this.storePage * 20).then(res => {
+          this.FinishLoad = true
           for (let item of res) {
             item.image_path = 'https://elm.cangdu.org/img/' + item.image_path
             item.startWidth = {
@@ -79,9 +80,9 @@
             this.storeInfo.push(item)
           }
           this.storePage++
+          this.$refs.scroll.ScrollTo(0,1,5)
           this.$refs.scroll.finishPullUp()
         })
-        this.FinishLoad = true
       }
     },
     beforeMount() {
@@ -96,8 +97,6 @@
         this.latitude = res.latitude
       })
       this._getStoreInfo()
-
-
       getFoodCategory().then(res => {
         for (let item of res) {
           item.image_url = 'https://fuss10.elemecdn.com/' + item.image_url
@@ -108,6 +107,7 @@
         for (var i = 8; i < res.length; i++) {
           this.foodPage2.push(res[i])
         }
+          this.$refs.scroll.refresh()
       })
 
     },
@@ -116,6 +116,7 @@
 
 <style scoped>
   .Home {
+    background-color: #fff;
     overflow: hidden;
   }
 

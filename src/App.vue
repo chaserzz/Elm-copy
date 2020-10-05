@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition name="router-fade" mode="out-in">
-       <keep-alive exclude='Shop,Food,confirmOrder,Register,Pay,' >
+       <keep-alive exclude='Shop,Food,confirmOrder,Register,Pay,ShopDetail,ShopSafe' >
          <router-view />
         </keep-alive>
     </transition>

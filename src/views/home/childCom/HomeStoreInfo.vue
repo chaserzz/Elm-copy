@@ -11,8 +11,7 @@
       </svg>
       <span>附近商家</span>
     </header>
-    <store-list :store-list='storeInfo'>
-
+    <store-list v-if='refresh' :store-list='storeInfo'>
     </store-list>
   </div>
 </template>
@@ -36,15 +35,15 @@
     },
     data() {
       return {
-
+        refresh:false
       };
     },
     computed: {
 
     },
-    methods: {
-
-    },
+  mounted(){
+    this.refresh = true
+  }
   }
 </script>
 

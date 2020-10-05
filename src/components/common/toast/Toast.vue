@@ -46,6 +46,7 @@
         background: rgba(0, 0, 0, .6);
         color: white;
         border-radius: 10px;
-        font-size: 14px;
+        font-size: .8rem;
+        white-space: nowrap;
     }
 </style>

@@ -23,6 +23,7 @@
             <li v-for='(item,index) in cartData' :key='index'>
               <section>
                 <span class='foodname'>{{item.name}}</span>
+                <span class='foodspce'>{{item.specs}}</span>
                 <span class='foodprice'>￥{{item.price}}</span>
                 <div class='foodnum'>
                   <!-- 减号 -->
@@ -139,14 +140,26 @@
         this.$emit('clear')
       },
       //加号点击事件
+      //changeCart(index, id, num, name, price, isAdd,specs,sku_id,stock,food_id,packing_fee)
       addToCart(item) {
+        let isSpecs = false
+        if(item.specs != ''){
+           isSpecs = true
+        }
         item.num++
-        this.$emit('changeCart', item.foodListIndex, item.foodsIndex, item.num, item.name, item.price, true)
+        this.$emit('changeCart', item.foodListIndex, item.foodsIndex, item.num, item.name, item.price, true,item.specs,item.sku_id,item.stock,item.id,item.packing_fee,isSpecs)
       },
       //减号点击事件
       subToCart(item) {
+        let isSpecs = false
+        if(item.specs != ''){
+           isSpecs = true
+        }
         item.num--
-        this.$emit('changeCart', item.foodListIndex, item.foodsIndex, item.num, item.name, item.price, false)
+        this.$emit('changeCart', item.foodListIndex, item.foodsIndex, item.num, item.name, item.price, false,item.specs,item.sku_id,item.stock,item.id,item.packing_fee,isSpecs)
+        if(item.specs != ''){
+          this.$bus.$emit('specSub', item)
+        }
       },
       //点击购物车小图标以后显示详情
       shopCartClick() {
@@ -447,7 +460,12 @@
     font-size: 1rem;
     font-weight: 700;
   }
-
+  .foodspce{
+    position: relative;
+    left: .5rem;
+    font-size: .7rem;
+    color: #666;
+  }
   .foodprice {
     position: absolute;
     right: 25vw;

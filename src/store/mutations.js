@@ -1,8 +1,8 @@
-import { SETTEXT } from './mutations_type'
+import { SETTOTALPRICE } from './mutations_type'
 
 export default {
-    [SETTEXT](state, payload) {
-        state.text = payload
+    [SETTOTALPRICE](state, payload) {
+        state.totalprice = payload
     },
 
 }

@@ -16,13 +16,9 @@ import {getSectionStore} from 'common/utils'
 
 export default {
   name: 'confirmBottomBar',
-  components:{
-    
-  },
-  data () {
-   
-    return {
-      totalPrice:0
+  computed:{
+    totalPrice(){
+       return this.$store.state.totalprice 
     }
   },
   methods:{
@@ -32,9 +28,6 @@ export default {
      })
    }
   },
-  mounted(){
-    this.totalPrice = JSON.parse(getSectionStore('totalPrice'))
-  }
 }
 </script>
 

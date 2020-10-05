@@ -10,7 +10,7 @@
       <section class='Goods' v-show='currentIndex === 0'>
         <shop-food-list class='foodList' :finish-load='FoodLoadFinish' :food-list='FoodList' @changeCart='changeCart' />
         <section class='shopcart'>
-          <shop-cart @goPay='goConfirm' @changeCart='changeCart' @clear='clearCart' :cart-data='CurrtentCartData'
+          <shop-cart ref="shopCart" @goPay='goConfirm' @changeCart='changeCart' @clear='clearCart' :cart-data='CurrtentCartData'
             :receive='receiveInCart' :mini-order-fee='shopInfo.float_minimum_order_amount'
             :deliver-fee='shopInfo.float_delivery_fee' />
         </section>
@@ -74,7 +74,7 @@
         Comments: {},
         tagName: '',
         page: 1, //顾客评论的当前页数,
-        CurrtentCartData: [],
+        CurrtentCartData: [],  //当前商店的购物车
         FoodLoadFinish: false
       };
     },
@@ -109,15 +109,18 @@
         })
         //获取店铺的食品页面
         getFoodList(this.shopId).then(res => {
-          for (let item of res) {
             for (let iter of this.CartList) {
               if (iter.shopId === this.shopId) {
-                res[iter.foodListIndex].foods[iter.foodsIndex].__v = iter.num
+               //不是规格类商品
+               if(iter.specs === ''){
+                  res[iter.foodListIndex].foods[iter.foodsIndex].__v = iter.num
+               }else{
+                  res[iter.foodListIndex].foods[iter.foodsIndex].__v += iter.num
+               }
               }
             }
             this.FoodList = res
             this.FoodLoadFinish = true
-          }
         })
         //获得评价分类
         getCommentsTags(this.shopId).then(res => {
@@ -140,14 +143,18 @@
         this.currentIndex = index
       },
       //改变购物车中的数量
-      changeCart(index, id, num, name, price, isAdd) {
+      changeCart(index, id, num, name, price, isAdd,specs,sku_id,stock,food_id,packing_fee,isSpce) {
+        //判断是否是规格类商品
+        if(isSpce){
+          //判断是否是添加
+          if(isAdd){
+            ++this.FoodList[index].foods[id].__v
+          }else{
+            --this.FoodList[index].foods[id].__v
+          }
+        }else{
         this.FoodList[index].foods[id].__v = num
-        let item = this.FoodList[index].foods[id].specfoods[0]
-        //无规格
-        if(item.specs.length === 0){
-          item.specs.push('')
         }
-        console.log(item);
         if (isAdd) this.receiveInCart = true //是否是添加数量
         let findItem = false //找到相同的食品
         this.CartList = JSON.parse(getStore('CartList')) || []
@@ -161,24 +168,23 @@
           foodListIndex: index,
           foodsIndex: id,
           num: num,
-          name: name,
-          price: item.price,
-          packing_fee: item.packing_fee,
-          id: item.food_id,
-          sku_id: item.sku_id,
-          stock: item.stock,
-          specs: item.specs
+          name: name, 
+          price: price,
+          packing_fee: packing_fee ,
+          id: food_id,
+          sku_id: sku_id ,
+          stock: stock,
+          specs: specs 
         }
         removeStore('CartList')
         if (this.CartList.length == 0) {
           this.CartList.push(CartItem)
         } else {
           for (let i = 0; i < this.CartList.length; i++) {
-            if (this.CartList[i].shopId === this.shopId && this.CartList[i].foodListIndex === index && this.CartList[i]
-              .foodsIndex === id) {
+            if (this.CartList[i].shopId === this.shopId && this.CartList[i].id === food_id) {
               this.CartList[i].num = num
               findItem = true
-              break
+             
             }
             if (this.CartList[i].num === 0) {
               this.CartList.splice(i, 1)
@@ -195,11 +201,16 @@
 
       },
       /**清空购物车 */
-      clearCart() {
+      clearCart() {       
+        this.$refs.shopCart.blockClick()
         this.CurrtentCartData = []
         for (let i = 0; i < this.CartList.length; i++) {
           if (this.CartList[i].shopId === this.shopId) {
+            let index = this.CartList[i].foodListIndex
+            let id = this.CartList[i].foodsIndex
+            this.FoodList[index].foods[id].__v = 0
             this.CartList.splice(i, 1)
+            i--
           }
         }
         removeStore('CartList')
@@ -208,7 +219,7 @@
       getCartData() {
         let cartlist = []
         for (const iterator of this.CartList) {
-          if (iterator.shopId == this.shopId && iterator.num !== 0) {
+          if (iterator.shopId === this.shopId && iterator.num > 0 && iterator.id !== 0) {
             cartlist.push(iterator)
           }
         }
@@ -248,8 +259,12 @@
       this.getShopInfo()
       this.setShopHeight()
     },
-    watch: {
-
+    watch:{
+      CurrtentCartData(){
+        if(this.CurrtentCartData.length === 0){
+          this.$refs.shopCart.blockClick()
+        }
+      }
     }
   }
 </script>

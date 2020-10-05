@@ -6,7 +6,7 @@ import mutations from './mutations'
 import actions from './actions'
 import getters from './getters'
 const state = {
-    text: ''
+    totalprice: 0
 }
 export default new Vuex.Store({
     state,

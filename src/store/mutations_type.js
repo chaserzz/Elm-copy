@@ -1,1 +1,1 @@
-export const SETTEXT = 'settext'
+export const SETTOTALPRICE = 'settotalprice'

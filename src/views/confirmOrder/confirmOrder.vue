@@ -109,7 +109,7 @@
         })
         //获得备注信息
         let obj = JSON.parse(getSectionStore('clientRemarks'))
-        if (obj.quick.length>0) {
+        if ( obj!=null && obj.quick != '') {
           for (const item of obj.quick) {
            if (this.remarkInfo == '口味,偏好等 ') {
              this.remarkInfo = ''
@@ -117,7 +117,7 @@
             this.remarkInfo += item +','
           }
         } 
-        if (obj.other !='') {
+        if ( obj!=null && obj.other !='') {
           if (this.remarkInfo == '口味,偏好等 ') {
             this.remarkInfo = obj.other
           } else {
@@ -126,7 +126,7 @@
         }
       },
     },
-    beforeMount() {
+    mounted() {
       this.getData()
       this._getShopInfo(this.shopId)
 

@@ -1,5 +1,5 @@
 export default {
-    gettext(state) {
-        return state.text
+    getTotalPrice(state) {
+        return state.totalprice
     },
 }

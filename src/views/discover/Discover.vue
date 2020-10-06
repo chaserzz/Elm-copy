@@ -18,9 +18,9 @@
       <!-- 历史记录-->
       <div v-if='Historymodel '>
         <ul>
-          <li v-for='(item,index) in historySearch' class='historyItem' :key='index'>
+          <li v-for='(item,index) in historySearch' class='historyItem' :key='index' @click='historyItemClick(item)'>
             <span>{{item}}</span>
-            <svg @click='deleteItem(index)' t="1595044747529" class="icon" viewBox="0 0 1024 1024" version="1.1"
+            <svg @click.stop='deleteItem(index)' t="1595044747529" class="icon" viewBox="0 0 1024 1024" version="1.1"
               xmlns="http://www.w3.org/2000/svg" p-id="3374" width="11" height="11">
               <path
                 d="M671.830688 511.699001l319.059377-319.059377c43.945914-43.945914 43.945914-115.583774 0-159.529688-43.945914-43.945914-115.583774-43.945914-159.529688 0l-319.059377 319.059377-319.059377-319.059377c-43.945914-43.945914-115.583774-43.945914-159.529688 0-43.945914 43.945914-43.945914 115.583774 0 159.529688l319.059377 319.059377-319.059377 319.059377c-43.945914 43.945914-43.945914 115.583774 0 159.529688 43.945914 43.945914 115.583774 43.945914 159.529688 0l319.059377-319.059377 319.059377 319.059377c43.945914 43.945914 115.583774 43.945914 159.529688 0 43.945914-43.945914 43.945914-115.583774 0-159.529688L671.830688 511.699001z"
@@ -39,7 +39,7 @@
       <!--搜索到数据-->
       <div v-if='!IsreasulteNull && !Historymodel ' class='resulte'>
         <ul>
-          <li v-for='(item,index) in searchResulte' :key='index'>
+          <li v-for='(item,index) in searchResulte' :key='index' @click='ShopItem(item)'>
             <img :src="item.image_path" alt="">
             <p class='first'>
               <span class='name'>{{item.name}}</span>
@@ -83,7 +83,7 @@
     data() {
       return {
         keyword: '',
-        historySearch: [],
+        historySearch: [], //历史搜索
         Historymodel: true,
         searchResulte: [],
         IsreasulteNull: false
@@ -93,6 +93,7 @@
 
     },
     methods: {
+      //获取历史数据
       getHistoryList() {
         if (getStore('historySearch')) {
           this.historySearch = JSON.parse(getStore('historySearch'))
@@ -135,7 +136,9 @@
       },
       //关闭图标
       deleteItem(index) {
-        console.log(index);
+        this.historySearch.splice(index,1)
+        removeStore('historySearch')
+        setStore('historySearch', this.historySearch)
       },
       //清空
       clear() {
@@ -152,6 +155,18 @@
           this.IsreasulteNull = false
           this.commit()
         }
+      },
+      //点击搜索结果
+      ShopItem(item){
+        let id = item.id
+        this.$router.push({
+          path: '/shop/' + id
+        })
+      },
+      //历史Item的点击
+      historyItemClick(item){
+        this.keyword = item
+        this.commit()
       }
     },
     beforeMount() {
@@ -162,6 +177,8 @@
 
 <style scoped>
   #Scroll {
+    height: calc(100vh - 49px - 50px - 2.2rem - .9rem - 1.1rem);
+    overflow: hidden;
     background-color: #fff;
   }
 
@@ -207,6 +224,7 @@
 
   .title {
     background-color: rgb(245, 245, 245);
+    height: .9rem;
     font-size: .8rem;
     font-weight: 550;
     color: rgb(102, 102, 102);
@@ -263,7 +281,9 @@
   .third {
     margin-left: 3.4rem;
   }
-
+  .resulte ul {
+    padding-top: .8rem;
+  }
   .resulte li {
     margin-top: 0.8rem;
     padding-bottom: 0.8rem;

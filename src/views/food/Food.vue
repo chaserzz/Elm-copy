@@ -91,7 +91,6 @@
     created() {
       this.getParams()
       getCategoryList().then(res => {
-        console.log(res);
         for (let item of res) {
           if (item.image_url) {
             item.image_url = 'https://fuss10.elemecdn.com/' + item.image_url

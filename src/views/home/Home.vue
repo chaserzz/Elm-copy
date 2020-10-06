@@ -6,7 +6,6 @@
       <home-swiper :foodList1='foodPage1' :foodList2='foodPage2' :longitude='longitude' :latitude='latitude' />
       <home-store-info v-if='FinishLoad' :storeInfo='storeInfo' />
     </scroll>
-
   </div>
 </template>
 

@@ -105,8 +105,9 @@
           this.alertText = '请输入验证码'
         } else {
           sendLogin(this.userId, this.userPassword, this.CodeNum).then(res => {
-            console.log(res);
             if (res.message == '验证码失效') {
+          this.showAlert = true
+          this.alertText = '验证码失效'
               this.changeCaptchas()
             }
           })
@@ -120,7 +121,6 @@
     created() {
       this._getcaptchasImg()
       getUserInfo().then(res =>{
-        console.log(res);
       })
     }
   }

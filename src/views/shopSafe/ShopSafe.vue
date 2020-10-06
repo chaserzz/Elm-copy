@@ -1,10 +1,12 @@
 <template>
   <div class='shop_safe' v-if='this.identification !== null'>
     <shop-safe-nav-bar />
+    <scroll id='Scroll' :probe-type='3'>
     <shop-safe-public :status='status' v-if = 'sonRefresh'/>
     <shop-business-info :ident-info='identification' />
     <shop-food-lisence :food-lisence-info='identification'/>
     <shop-lisence-photo v-if = 'sonRefresh' :lisence='lisencePhoto' />
+    </scroll>
   </div>
 </template>
 
@@ -64,5 +66,8 @@ export default {
 <style scoped>
 .shop_safe{
   overflow: hidden;
+}
+#scroll {
+    height: calc(100vh - 49px );
 }
 </style>

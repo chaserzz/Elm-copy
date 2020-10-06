@@ -19,12 +19,14 @@
         <div class='notice' v-if='info.promotion_info'>
           {{info.promotion_info}}
         </div>
-         <svg  @click='headerClick()'  t="1595408158024" class="icon right big" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-              p-id="3330" width="1.2rem" height="1.2rem">
-              <path
-                d="M234.464182 21.713854a73.537091 73.537091 0 0 1 104.34666 0l448.186984 445.207497a73.527867 73.527867 0 0 1 21.86188 51.676529 78.513008 78.513008 0 0 1-21.86188 52.670131L333.83756 1015.481905c-28.52323 15.072705-63.541771 9.791065-86.355084-13.023566s-28.089682-57.833172-13.018294-86.355084L631.968239 518.599198 234.464182 121.092504c-25.769081-28.116038-25.769081-71.262612 0-99.37865z m0 0"
-                p-id="3331" fill="#ffffff"></path>
+        <div class='goDetail  big' @click='headerClick()'>
+          <svg t="1595408158024" viewBox="0 0 1024 1024" version="1.1"
+            xmlns="http://www.w3.org/2000/svg" p-id="3330" width="1.2rem" height="1.2rem">
+            <path
+              d="M234.464182 21.713854a73.537091 73.537091 0 0 1 104.34666 0l448.186984 445.207497a73.527867 73.527867 0 0 1 21.86188 51.676529 78.513008 78.513008 0 0 1-21.86188 52.670131L333.83756 1015.481905c-28.52323 15.072705-63.541771 9.791065-86.355084-13.023566s-28.089682-57.833172-13.018294-86.355084L631.968239 518.599198 234.464182 121.092504c-25.769081-28.116038-25.769081-71.262612 0-99.37865z m0 0"
+              p-id="3331" fill="#ffffff"></path>
           </svg>
+        </div>
       </header>
       <div>
         <footer v-if='info.activities'>
@@ -78,7 +80,7 @@
       showActive() {
         this.$emit('showActive')
       },
-      headerClick(){
+      headerClick() {
         this.$emit('goDetail')
       }
     },
@@ -192,8 +194,16 @@
     width: 100%;
     text-align: center;
   }
-  .big{
+
+  .big {
     opacity: .8;
-    top:1.7rem;
+    top: 2rem;
+  }
+  .goDetail{
+    display: inline-block;
+    position: absolute;
+    width: 2.5rem;
+    height: 2.5rem;
+    right: -0.4rem;
   }
 </style>

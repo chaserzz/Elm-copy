@@ -54,7 +54,7 @@
       goDiscover() {
         let geohash = localStorage.getItem('geohash')
         this.$router.push({
-          path: '/discover/' + geohash
+          path: '/medium/discover/' + geohash
         })
       },
       goProfile() {

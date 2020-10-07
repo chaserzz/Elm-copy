@@ -5,7 +5,7 @@ export function request(options) {
     return new Promise((resolve, reject) => {
         // 1.创建axios的实例对象
         const instance = axios.create({
-            baseURL: 'http://elm.cangdu.org',
+            baseURL: 'https://elm.cangdu.org',
             timeout: 9000,
         })
         instance.defaults.withCredentials = true; //配置为true

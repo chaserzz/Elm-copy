@@ -8,7 +8,7 @@ import getters from './getters'
 const state = {
     totalprice: 0, //购物车总价格
     shopid: 0, //当前商店的id
-
+    finishorder: [] //已经完成支付的订单
 }
 export default new Vuex.Store({
     state,

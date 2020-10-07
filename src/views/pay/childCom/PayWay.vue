@@ -52,9 +52,10 @@
 
     },
     methods: {
-itemClick(index){
-  this.currentIndex = index
-}
+      itemClick(index){
+        this.currentIndex = index
+        this.$emit('Paychose')
+      }
     }
   }
 </script>

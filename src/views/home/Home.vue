@@ -79,7 +79,7 @@
             this.storeInfo.push(item)
           }
           this.storePage++
-          this.$refs.scroll.ScrollTo(0,1,5)
+          this.$refs.scroll.ScrollTo(0, 1, 5)
           this.$refs.scroll.finishPullUp()
         })
       }
@@ -106,10 +106,15 @@
         for (var i = 8; i < res.length; i++) {
           this.foodPage2.push(res[i])
         }
-          this.$refs.scroll.refresh()
+        this.$refs.scroll.refresh()
       })
 
     },
+    deactivated() {
+      this.scrollY = this.$refs.scroll.getPositionY();
+      //关闭Home页面的自动刷新
+      this.$bus.$off('itemImgLoad', this.itemImgLoad);
+    }
   }
 </script>
 

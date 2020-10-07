@@ -2,7 +2,7 @@
   <div class='confirmOrder'>
     <confirm-order-nav-bar />
     <scroll class='content' ref='scroll' :probe-type='3'>
-      <confirm-address />
+      <confirm-address @addressClick='addressChoose' />
       <confirm-deliver :time='deliverTime' />
       <confirm-pay-way />
       <confirm-info 
@@ -13,7 +13,8 @@
       <confirm-remark-info :remark-info='remarkInfo' />
       <div class='block'></div>
     </scroll>
-    <confirm-bottom-bar  class='bottomBar' />
+    <confirm-bottom-bar  class='bottomBar' @payFor='goPay' />
+    <alert-tip v-if="showAlert" :showHide="showAlert" @closeTip="closeTip" :alertText="alertText" />
   </div>
 </template>
 
@@ -38,6 +39,7 @@
     getSectionStore
   } from 'common/utils.js'
   import scroll from 'components/common/scroll/scroll'
+import alertTip from 'components/common/alter/alertTip'
 
   export default {
     name: 'confirmOrder',
@@ -49,7 +51,8 @@
       confirmInfo,
       confirmRemarkInfo,
       scroll,
-      confirmBottomBar
+      confirmBottomBar,
+      alertTip
     },
     data() {
 
@@ -62,7 +65,10 @@
         deliverFee: 0, //配送费
         cartList: [], // 购物车
         remarkInfo: '口味,偏好等 ', //备注信息
-        totalPrice:0
+        totalPrice:0,//总价格
+        showAlert:false, //警告隐藏
+        alertText:'请先登录',//警告内容
+
       }
     },
     computed: {
@@ -125,6 +131,23 @@
           }
         }
       },
+      //选择地址
+      addressChoose(){
+        this.showAlert = true
+      },
+      //警告点击
+      closeTip(){
+        this.showAlert = false
+        this.$router.push({
+          path:'/register'
+        })
+      },
+      //前往支付页面
+      goPay(){
+      this.$router.push({
+       path:'/pay/' + this.shopId+ '/' + this.deliverTime
+     })
+    }
     },
     mounted() {
       this.getData()

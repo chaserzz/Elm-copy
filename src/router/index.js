@@ -115,7 +115,7 @@ const routes = [{
         name: 'Invoice'
     },
     { //支付
-        path: '/pay',
+        path: '/pay/:shopId/:deliver_time',
         component: Pay,
         name: 'Pay'
     }

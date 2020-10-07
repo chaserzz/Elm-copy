@@ -1,4 +1,4 @@
-import { SETTOTALPRICE, SETSHOPID, } from './mutations_type'
+import { SETTOTALPRICE, SETSHOPID, SETFINISHORDER } from './mutations_type'
 
 export default {
     [SETTOTALPRICE](state, payload) {
@@ -7,5 +7,7 @@ export default {
     [SETSHOPID](state, payload) {
         state.shopid = payload
     },
-
+    [SETFINISHORDER](state, payload) {
+        state.finishorder.push(payload)
+    }
 }

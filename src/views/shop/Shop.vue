@@ -10,8 +10,8 @@
       <section class='Goods' v-show='currentIndex === 0'>
         <shop-food-list class='foodList' :finish-load='FoodLoadFinish' :food-list='FoodList' @changeCart='changeCart' />
         <section class='shopcart'>
-          <shop-cart ref="shopCart" @goPay='goConfirm' @changeCart='changeCart' @clear='clearCart' :cart-data='CurrtentCartData'
-            :receive='receiveInCart' :mini-order-fee='shopInfo.float_minimum_order_amount'
+          <shop-cart ref="shopCart" @goPay='goConfirm' @changeCart='changeCart' @clear='clearCart'
+            :cart-data='CurrtentCartData' :receive='receiveInCart' :mini-order-fee='shopInfo.float_minimum_order_amount'
             :deliver-fee='shopInfo.float_delivery_fee' />
         </section>
       </section>
@@ -22,7 +22,7 @@
         </scroll>
       </section>
     </div>
-    <shop-active v-if='showActive' :active='activeContent' @colseActive='colse'/>
+    <shop-active v-if='showActive' :active='activeContent' @colseActive='colse' />
   </div>
 </template>
 
@@ -65,22 +65,22 @@
     },
     data() {
       return {
-        shopId: 0,  //商店id
+        shopId: 0, //商店id
         shopInfo: [], //商店信息
         FoodList: [], //商品信息
         receiveInCart: false,
         //购物车的内容
-        CartList: [],  //购物车
+        CartList: [], //购物车
         currentIndex: 0, //互斥
         commentsTags: [], //评价标签
         customerComments: [], //
         Comments: {}, //评价
-        tagName: '',  //当前选择的tag名称
+        tagName: '', //当前选择的tag名称
         page: 1, //顾客评论的当前页数,
-        CurrtentCartData: [],  //当前商店的购物车
+        CurrtentCartData: [], //当前商店的购物车
         FoodLoadFinish: false, //加载完毕
-        showActive:false, //是否显示活动组件
-        activeContent:{},  //活动组件的内容
+        showActive: false, //是否显示活动组件
+        activeContent: {}, //活动组件的内容
       };
     },
     computed: {
@@ -91,14 +91,21 @@
       getShopInfo() {
         this.shopId = this.$route.params.shopid
         this.CartList = JSON.parse(getStore('CartList')) || []
-        for (let i = 0; i < this.CartList.length - 1; i++) {
-          if (this.CartList[i].shopId == this.shopId && this.CartList[i].foodListIndex == this.CartList[i + 1]
-            .foodListIndex && this.CartList[i].foodsIndex == this.CartList[i + 1].foodsIndex) {
-            this.CartList.splice(i, 1)
-            i--
+        for (let i = 0; i < this.CartList.length; i++) {
+          //商店ID为此ID
+          if (this.CartList[i].shopId == this.shopId) {
+            /*&& this.CartList[i].foodListIndex == this.CartList[i + 1]
+            .foodListIndex && this.CartList[i].foodsIndex == this.CartList[i + 1].foodsIndex*/
+            if (this.CartList[i + 1]) {
+              if (this.CartList[i].foodListIndex == this.CartList[i + 1].foodListIndex &&
+                this.CartList[i].foodsIndex == this.CartList[i + 1].foodsIndex) {
+                this.CartList.splice(i, 1)
+                i--
+              }
+            }
           }
         }
-        for (let i = 0; i < this.CartList.length - 1; i++) {
+        for (let i = 0; i < this.CartList.length; i++) {
           if (this.CartList[i].num === 0) {
             this.CartList.splice(i, 1)
           }
@@ -114,18 +121,18 @@
         })
         //获取店铺的食品页面
         getFoodList(this.shopId).then(res => {
-            for (let iter of this.CartList) {
-              if (iter.shopId === this.shopId) {
-               //不是规格类商品
-               if(iter.specs === ''){
-                  res[iter.foodListIndex].foods[iter.foodsIndex].__v = iter.num
-               }else{
-                  res[iter.foodListIndex].foods[iter.foodsIndex].__v += iter.num
-               }
+          for (let iter of this.CartList) {
+            if (iter.shopId === this.shopId) {
+              //不是规格类商品
+              if (iter.specs === '') {
+                res[iter.foodListIndex].foods[iter.foodsIndex].__v = iter.num
+              } else {
+                res[iter.foodListIndex].foods[iter.foodsIndex].__v += iter.num
               }
             }
-            this.FoodList = res
-            this.FoodLoadFinish = true
+          }
+          this.FoodList = res
+          this.FoodLoadFinish = true
         })
         //获得评价分类
         getCommentsTags(this.shopId).then(res => {
@@ -152,17 +159,17 @@
         this.currentIndex = index
       },
       //改变购物车中的数量
-      changeCart(index, id, num, name, price, isAdd,specs,sku_id,stock,food_id,packing_fee,isSpce) {
+      changeCart(index, id, num, name, price, isAdd, specs, sku_id, stock, food_id, packing_fee, isSpce) {
         //判断是否是规格类商品
-        if(isSpce){
+        if (isSpce) {
           //判断是否是添加
-          if(isAdd){
+          if (isAdd) {
             ++this.FoodList[index].foods[id].__v
-          }else{
+          } else {
             --this.FoodList[index].foods[id].__v
           }
-        }else{
-        this.FoodList[index].foods[id].__v = num
+        } else {
+          this.FoodList[index].foods[id].__v = num
         }
         if (isAdd) this.receiveInCart = true //是否是添加数量
         let findItem = false //找到相同的食品
@@ -177,13 +184,13 @@
           foodListIndex: index,
           foodsIndex: id,
           num: num,
-          name: name, 
+          name: name,
           price: price,
-          packing_fee: packing_fee ,
+          packing_fee: packing_fee,
           id: food_id,
-          sku_id: sku_id ,
+          sku_id: sku_id,
           stock: stock,
-          specs: specs 
+          specs: specs
         }
         removeStore('CartList')
         if (this.CartList.length == 0) {
@@ -193,7 +200,7 @@
             if (this.CartList[i].shopId === this.shopId && this.CartList[i].id === food_id) {
               this.CartList[i].num = num
               findItem = true
-             
+
             }
             if (this.CartList[i].num === 0) {
               this.CartList.splice(i, 1)
@@ -210,7 +217,7 @@
 
       },
       /**清空购物车 */
-      clearCart() {       
+      clearCart() {
         this.$refs.shopCart.blockClick()
         this.CurrtentCartData = []
         for (let i = 0; i < this.CartList.length; i++) {
@@ -264,13 +271,13 @@
         })
       },
       //关闭活动组件
-      colse(){
+      colse() {
         this.showActive = false
       },
       //前往Detail页面
-      goDetail(){
+      goDetail() {
         this.$router.push({
-          path:'/shopDetail/' + this.shopId
+          path: '/shopDetail/' + this.shopId
         })
       }
     },
@@ -278,9 +285,9 @@
       this.getShopInfo()
       this.setShopHeight()
     },
-    watch:{
-      CurrtentCartData(){
-        if(this.CurrtentCartData.length === 0){
+    watch: {
+      CurrtentCartData() {
+        if (this.CurrtentCartData.length === 0) {
           this.$refs.shopCart.blockClick()
         }
       }

@@ -39,6 +39,9 @@ export default {
       return ;  
       }
       this.time--
+      if(this.time === 0){
+        this.$emit('timeOver')
+      }
     }
   },
   mounted(){

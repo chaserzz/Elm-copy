@@ -5,7 +5,7 @@ export default {
     getShopId(state) {
         return state.shopid
     },
-    getDefaultImg(state) {
-        return state.defaultImg
+    getFinishOrder(state) {
+        return state.finishorder
     }
 }

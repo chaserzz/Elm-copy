@@ -23,9 +23,7 @@ export default {
   },
   methods:{
    goPay(){
-     this.$router.push({
-       path:'/pay'
-     })
+     this.$emit('payFor')
    }
   },
 }

@@ -41,7 +41,8 @@
         pay: false, //选择支付方式
         timeOut: false, //时间是否走完
         shopId: 0, //商店ID
-        Order:{} //订单内容
+        Order:{}, //订单内容
+        newCartList:[] //更新后的购物车
       }
     },
     methods: {
@@ -54,7 +55,10 @@
         if (this.pay === false) {
           this.alertText = '请先选择支付方式'
           this.showAlert = true
-          return ;
+          //将新的购物车更新到本地缓存中 
+          this.removeStore('CartList')
+          this.setStore('CartList',this.newCartList)
+          return 
         }
         this.alertText = '支付完成,请前往订单页面'
         this.showAlert = true
@@ -101,6 +105,7 @@
             i--
           }
         }
+        this.newCartList = CartList
         Order.CartList = cartList
       },
       //15min支付时间走完

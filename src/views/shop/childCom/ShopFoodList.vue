@@ -1,7 +1,7 @@
 <!-- 组件说明 -->
 <template>
   <div class='FoodList'>
-    <transition name="fade-choose">
+    <transition name="fade">
       <div class='container'>
         <scroll ref='left_scroll' id='left_Scroll' :probe-type='3'>
           <div class='left'>
@@ -9,6 +9,7 @@
               <li ref='category' class='foodtitleitem' v-for='(item,index) in FoodList' :key='index'
                 :class='{active: index == currentIndex}' @click='categoryClick(index)'>
                 <span>{{item.name}}</span>
+                <span v-show='item.num > 0' class='item_num'>{{item.num}}</span>
               </li>
             </ul>
           </div>
@@ -145,7 +146,10 @@
         id:0,
         //失败图片路径
         defaultImg:require('../../../assets/images/common/Load.jpg')
-      };
+      }
+    },
+    computed:{
+
     },
     methods: {
       //左边分类菜单点击事件
@@ -243,6 +247,7 @@
     },
     },
     mounted() {
+      
       this.$refs.left_scroll.refresh()
       this.setScrllHeight()
       this.$bus.$on('specSub', (item) => {
@@ -297,6 +302,7 @@
   }
 
   .foodtitleitem {
+    position: relative;
     width: 5rem;
     padding-top: 2.4vh;
     padding-bottom: 2.4vh;
@@ -546,5 +552,19 @@
 .spce_active{
   border-color:#3190E8;
   color: #3190E8;
+}
+.foodtitleitem .item_num{
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  top:32%;
+  transform: translateY(-50%);
+  right: 10%;
+  border-radius: 50%;
+  background-color:#ff6000;
+  text-align: center;
+  line-height: 1rem;
+  font-size: .7rem;
+  color: #fff;
 }
 </style>

@@ -121,17 +121,24 @@
         })
         //获取店铺的食品页面
         getFoodList(this.shopId).then(res => {
+          res.map((item,index)=>{
+            item.num = 0
+          })
           for (let iter of this.CartList) {
             if (iter.shopId === this.shopId) {
               //不是规格类商品
               if (iter.specs === '') {
                 res[iter.foodListIndex].foods[iter.foodsIndex].__v = iter.num
+                res[iter.foodListIndex].num += iter.num
               } else {
                 res[iter.foodListIndex].foods[iter.foodsIndex].__v += iter.num
+                res[iter.foodListIndex].num += iter.num
+
               }
             }
           }
           this.FoodList = res
+
           this.FoodLoadFinish = true
         })
         //获得评价分类
@@ -171,7 +178,16 @@
         } else {
           this.FoodList[index].foods[id].__v = num
         }
-        if (isAdd) this.receiveInCart = true //是否是添加数量
+        //是否是添加数量
+        if (isAdd) {
+          //FoodList左边导航栏内数量span增加
+          this.FoodList[index].num++
+          this.receiveInCart = true 
+        }else{
+          //FoodList左边导航栏内数量span增加
+          this.FoodList[index].num--
+
+        }
         let findItem = false //找到相同的食品
         this.CartList = JSON.parse(getStore('CartList')) || []
         if (this.CartList.length === 1) {
